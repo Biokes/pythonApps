@@ -1,4 +1,7 @@
-class phone_book:
+class Phone_book:
+    numbers = []
+    names = []
+
     def __int__(self):
         self.numbers = []
         self.names = []
@@ -28,18 +31,27 @@ class phone_book:
                 print(self.names[number], ' ---------->', self.numbers[number])
         else:
             return "no contacts available."
-        return ''
+        return "no contacts available."
+
+    def search_by_name(self, name):
+        if name not in self.names:
+            return "no match"
+        elif name in self.names:
+            num = self.names.index(name)
+            return f"{self.names[num]}  ----------> {self.numbers[num]}"
+        return "no match"
 
     def phone_menu(self):
-        print('''
-        1. Add Contact.
-        2. Delete number.
-        3. display contact.contact
-        4. Exit.
-        ''')
-        condition = True
-        while condition:
-            menu = int(input('Enter the nenu number of your choice: '))
+        while True:
+            print('''
+1. Add Contact.
+2. Delete number.
+3. display contact.
+4. search by name.
+5. Exit.
+
+                   ''')
+            menu = int(input('Enter the menu number of your choice: '))
             match menu:
                 case 1:
                     name = input('Enter the contact name: ')
@@ -50,8 +62,17 @@ class phone_book:
                     print(self.delete_contact(name))
                 case 3:
                     self.display_contacts()
-                case 4:
+                case 5:
                     self.exit()
                     condition = False
+                    break
+                case 4:
+                    name = input("Enter the name you want to search: ")
+                    self.search_by_name(name)
                 case _:
                     print("Invalid number.")
+
+
+phone_book1 = Phone_book()
+if __name__ == '__main__':
+    print(phone_book1.phone_menu())
