@@ -28,4 +28,5 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(3, fire_drill.function_can_get_length_of_list([1, 2, 3]))
 
     def test_function_can_get_list_doubled_in_length_and_values(self):
-        self.assertEqual([1, 2, 3, 2, 4, 6],fire_drill.get_doubled_list([1, 2, 3]) )
+        self.assertEqual([1, 2, 3, 2, 4, 6], fire_drill.get_doubled_list([1, 2, 3]) )
+
