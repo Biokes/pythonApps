@@ -58,10 +58,9 @@ def add_Third_elements(list1):
 
 
 def get_sum(list1):
-    output = 0
     if len(list1) % 2 == 0:
         length = len(list1)
-        output = list1[0] + ((list1[(length // 2)-1] + list1[length // 2]) / 2) + list1[length - 1]
+        output = list1[0] + ((list1[(length // 2) - 1] + list1[length // 2]) / 2) + list1[length - 1]
     else:
         length = (len(list1))
         output = list1[0] + list1[(length // 2)] + list1[length - 1]
@@ -75,7 +74,29 @@ def intersect_two_list(param, param1):
         else:
             param1.remove(numbers)
     if param1:
-         return param1
+        return param1
     else:
         return "No intersection between list"
 
+
+def split_strings(input1: str, input2: str):
+    input1_list = []
+    for elements in input1:
+        input1_list += elements
+    input2_list = []
+    for elements in input2:
+        input2_list += elements
+    input2_list[0], input2_list[1], input1_list[0], input1_list[1] = input1_list[0], input1_list[1], input2_list[0], \
+        input2_list[1]
+    output = ''
+    for elements in input1_list:
+        output += elements
+    output += ' '
+    for elements in input2_list:
+        output += elements
+    return output
+
+
+def split_string2(string: str, string2: str):
+    string[0], string[1], string2[0], string2[1] = string2[0], string2[1], string[0], string[1]
+    return string + ' ' + string2

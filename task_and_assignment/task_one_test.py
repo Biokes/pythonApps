@@ -34,3 +34,8 @@ class MyTestCase(unittest.TestCase):
     def test_intersection(self):
         self.assertEqual([3, 2, 1], task_one.intersect_two_list([3, 2, 4, 1], [5, 3, 9, 2, 1]))
 
+    def test_split_strings(self):
+        self.assertEqual('xycdgj abzjkl', task_one.split_strings('abcdgj', 'xyzjkl'))
+
+    def test_ssplit_string2(self):
+        self.assertEqual('xycdgj abzjkl', task_one.split_strings('abcdgj', 'xyzjkl'))
