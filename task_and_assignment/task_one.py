@@ -22,10 +22,6 @@ def remove_elements(number, set1):
     return set1
 
 
-# def find_intersection(set1=set, set2=set) -> set:
-#     return set1 & set2
-
-
 def list_creator():
     list1 = []
     for num in range(1, 16):
