@@ -1,12 +1,12 @@
 import unittest
-from Person import Person
-from problemTypes import ProblemTypes
+from apps.Person import Person
+from apps.problemTypes import ProblemTypes
 
 
 class MyTestCase(unittest.TestCase):
 
     def testThatPerson_can_add_to_his_problem_list(self):
-        person = Person()
+        person: Person = Person()
         self.assertEqual(0, person.size_of_problem_list())
         person.add_problem("name", ProblemTypes.EDUCATION)
         self.assertEqual(1, person.size_of_problem_list())

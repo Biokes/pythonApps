@@ -1,4 +1,4 @@
-def adjascentAsterisks():
+def adjacentAsterisks():
     userInputs = []
     number = 1
     while number != 22:
@@ -15,4 +15,4 @@ def adjascentAsterisks():
         print()
 
 
-print(adjascentAsterisks())
+print(adjacentAsterisks())
