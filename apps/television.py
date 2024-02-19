@@ -60,3 +60,8 @@ class television:
 
 if __name__ == '__main__':
     print('PyCharm')
+sentence = """
+the palace is few miles away from the village but going to the palace to see startups is fun"""
+counter = {}
+for word in sentence:
+    counter[word] = count

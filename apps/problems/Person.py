@@ -1,4 +1,3 @@
-from apps import problem
 from problemTypes import ProblemTypes
 
 

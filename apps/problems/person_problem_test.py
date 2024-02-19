@@ -1,6 +1,6 @@
 import unittest
-from apps.Person import Person
-from apps.problemTypes import ProblemTypes
+from apps.problems.Person import Person
+from apps.problems.problemTypes import ProblemTypes
 
 
 class MyTestCase(unittest.TestCase):
