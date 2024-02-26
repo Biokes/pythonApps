@@ -1,7 +1,7 @@
-from bank.insufficientAmountException import InsufficientBalanceException
-from bank.invalidAccountNumberException import InvalidAccountNumberException
-from bank.invalidAmountException import InvalidAmountException
-from bank.invalidPinException import InvalidPinException
+from bank_set_up.insufficientAmountException import InsufficientBalanceException
+from bank_set_up.invalidAccountNumberException import InvalidAccountNumberException
+from bank_set_up.invalidAmountException import InvalidAmountException
+from bank_set_up.invalidPinException import InvalidPinException
 
 
 class BankAccount:

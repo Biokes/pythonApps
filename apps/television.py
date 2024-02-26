@@ -56,12 +56,33 @@ class television:
         elif self.volume <= 0:
             return f"Min volume : 0"
         return f"volume : {self.volume}"
+import tkinter as tk
+from tkinter import messagebox
 
+def show_info_dialog(message):
+    root = tk.Tk()
+    root.withdraw()  # Hide the main window
+    messagebox.showinfo("Information", message)
+    root.destroy()  # Destroy the hidden window after displaying the message
+
+def show_input_dialog(prompt):
+    root = tk.Tk()
+    root.withdraw()  # Hide the main window
+    user_input = tk.simpledialog.askstring("Enter a number: ", prompt)
+    messagebox.showinfo("Invalid name:")
+    root.command("Enter name: ")
+    root.destroy()
+    return user_input
+
+# Example usage:
+show_info_dialog("This is an information message.")
+user_input = show_input_dialog("Enter your name:")
+if user_input:
+    print("Hello,", user_input)
+else:
+    print("No input provided.")
 
 if __name__ == '__main__':
-    print('PyCharm')
-sentence = """
-the palace is few miles away from the village but going to the palace to see startups is fun"""
-counter = {}
-for word in sentence:
-    counter[word] = count
+    display = tk.Tk()
+    tk.messagebox
+    user_input = tk.Message.askString("Enter your name:")
