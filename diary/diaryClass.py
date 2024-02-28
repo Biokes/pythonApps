@@ -1,8 +1,9 @@
-from diary.Entry import Entry
-from diary.IdNotFoundException import IdNotFoundException
-from diary.entryNotFoundException import EntryNotFoundException
-from diary.incorrectPasswordException import IncorrectPasswordException
-from diary.invalidCommandException import InvalidCommandException
+from apps.diary.IdNotFoundException import IdNotFoundException
+from apps.diary.entryNotFoundException import EntryNotFoundException
+from apps.diary.incorrectPasswordException import IncorrectPasswordException
+from apps.diary.invalidCommandException import InvalidCommandException
+
+from apps.diary.Entry import Entry
 
 
 class Diary:
@@ -17,16 +18,16 @@ class Diary:
         self.entries = []
         self.isLocked = False
 
-    def unlockDiary(self, password: str):
+    def unlock_diary(self, password: str):
         if password == self.password:
             self.isLocked = False
             pass
         raise IncorrectPasswordException
 
-    def numberOfEntries(self):
+    def number_of_entries(self):
         return len(self.entries)
 
-    def lockDiary(self):
+    def lock_diary(self):
         self.isLocked = True
         pass
 

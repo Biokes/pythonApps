@@ -5,11 +5,12 @@ class Entry:
     numberOfEntries = 100100
 
     def __init__(self, title: str, body: str, numberOfEntries=None):
+        numberOfEntries += 1
         self.body = body
         self.id = numberOfEntries
         self.title = title
         self.dateCreated = date.today()
-        numberOfEntries += 1
+
 
     def setTitle(self, title: str):
         self.title = title
