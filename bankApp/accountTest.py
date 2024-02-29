@@ -56,9 +56,9 @@ class TestAccount:
     def test_account_can_withdraw(self):
         account: Account = Account("name name", "9087")
         number = account.get_account_number()
-        assert account.check_balance(number, "9087") == 0
         account.deposit(number, 500)
         account.withdraw("9087", 200)
+        assert account.check_balance(number, "9087") == 300
 
     def test_negative_withdrawal_raises_error(self):
         account: Account = Account("name name", "9087")

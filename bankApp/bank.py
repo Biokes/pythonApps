@@ -36,7 +36,7 @@ class Bank:
         return self.find_account(acc_num).get_balance(pin)
 
     def withdraw(self, acc_number: int, amount: float, pin: str):
-        self.find_account(acc_number).withdraw(acc_number, pin, amount)
+        self.find_account(acc_number).withdraw(pin, amount)
         pass
 
     def transfer(self, sender_account: int, amount: float, receiver_account: int, pin: str):
