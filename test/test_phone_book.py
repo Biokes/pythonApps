@@ -1,4 +1,4 @@
-import phone_book
+from apps.test import phone_book
 import unittest
 
 

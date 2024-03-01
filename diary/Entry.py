@@ -2,15 +2,12 @@ from datetime import date
 
 
 class Entry:
-    numberOfEntries = 100100
-
-    def __init__(self, title: str, body: str, numberOfEntries=None):
-        numberOfEntries += 1
+    num = 100100
+    def __init__(self, title: str, body: str,):
         self.body = body
-        self.id = numberOfEntries
+        self.id = num + 1
         self.title = title
         self.dateCreated = date.today()
-
 
     def setTitle(self, title: str):
         self.title = title

@@ -77,5 +77,5 @@ class Segments:
 
 if __name__ == '__main__':
     segment = Segments()
-    number_given = "10110111"
+    number_given = "11011011"
     segment.segments(number_given)

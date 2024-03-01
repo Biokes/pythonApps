@@ -20,16 +20,14 @@ def execution_time(func):
     return wrap
 
 
-
 @decorator
 @execution_time
 def loop(numbers: int):
-    returnList = []
+    return_list = []
     for number in range(numbers):
-        returnList.append(number)
+        return_list.append(number)
     return numbers.__str__()
 
 
 loop(2)
 print()
-
