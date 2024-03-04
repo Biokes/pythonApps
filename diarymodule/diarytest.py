@@ -6,6 +6,7 @@ from apps.diarymodule.Entry import Entry
 from apps.diarymodule.diary import Diary
 from apps.diarymodule.entryNotFoundException import EntryNotFoundError
 from apps.diarymodule.incorrectpassworderror import IncorrectPasswordError
+from apps.diarymodule.invalidCommandException import UnlockDiary
 from apps.diarymodule.invalididerror import InvalidId
 
 
@@ -25,20 +26,16 @@ class TestDiary:
 
     def test_diaryIsLockedAfterCreated(self):
         diary: Diary = Diary("username", "password")
-        false = False
-        assert diary.is_locked() == false
+        assert diary.is_locked()
 
     def test_diary_is_unlocked_when_user_unlocks_diary(self):
         diary: Diary = Diary("username", "password")
-        assert not diary.is_locked()
-        diary.lock_diary()
         diary.unlock_diary("password")
         assert not diary.is_locked()
 
     def test_incorrect_password_raises_error(self):
         diary: Diary = Diary("username", "password")
-        false = False
-        assert diary.is_locked() == false
+        assert diary.is_locked()
         diary.lock_diary()
         with pytest.raises(IncorrectPasswordError):
             diary.unlock_diary("password1")
@@ -47,7 +44,7 @@ class TestDiary:
 
     def test_lock_diary_check_diary_is_lock(self):
         diary: Diary = Diary("username", "password")
-        assert not diary.is_locked()
+        assert diary.is_locked()
         diary.lock_diary()
         assert diary.is_locked()
 
@@ -81,19 +78,19 @@ class TestDiary:
     def test_EntryIsCreatedLockedUnlockedWithWrongPassword_diaryIsLockedErrorIsRaised(self):
         diary = Diary("name", "password")
         diary.create_entry("name", "password")
-        assert not diary.is_locked()
-        diary.lock_diary()
         assert diary.is_locked()
         with pytest.raises(IncorrectPasswordError):
             diary.unlock_diary("pass wor")
         diary.unlock_diary("password")
         assert not diary.is_locked()
+        diary.lock_diary()
+        assert diary.is_locked()
 
     def test_findEntry_entryIsFoundById(self):
         diary = Diary("name", "password")
         diary.create_entry("name", "body")
-        title_gotten = diary.find_entry_by_id(101)
-        assert title_gotten.title == "name"
+        entry_gotten = diary.find_entry_by_id(101)
+        assert entry_gotten.get_entry_title() == "name"
 
     def test_findInvalidEntryId_entryIsNotFound_errorIsShown(self):
         diary = Diary("name", "password")
@@ -119,11 +116,22 @@ class TestDiary:
     def test_findEntry_returnsEntry_whenDiaryIsNotLocked(self):
         diary = Diary("name", "password")
         diary.create_entry("name", "body")
-        assert not diary.is_locked()
+        assert diary.is_locked()
+        assert diary.unlock_diary("password")
         assert diary.find_entry_by_id(101).get_entry_id() == 101
         assert diary.number_of_entries() == 1
 
     def test_deleteEntry_entryIsDeleted(self):
         diary = Diary("name", "password")
+        assert diary.number_of_entries() == 0
         diary.create_entry("name", "body")
-        diary.deleteEntry()
+        diary.deleteEntry(101)
+        assert diary.number_of_entries() == 0
+
+    def test_deleteEntry_entryIsDeletedWithCorrectPassword(self):
+        diary = Diary("name", "password")
+        diary.create_entry("name", "body")
+        assert diary.is_locked()
+        with pytest.raises(UnlockDiary):
+            diary.deleteEntry(191)
+        # assert diary.number_of_entries() == 1

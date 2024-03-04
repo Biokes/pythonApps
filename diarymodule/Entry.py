@@ -21,3 +21,6 @@ class Entry:
 
     def __str__(self):
         return f"Entry ID : {self.id}\nTitle : {self.title}\nBody : {self.body}\nDate Created : {self.date_created}"
+
+    def get_entry_title(self):
+        return self.title

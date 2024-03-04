@@ -1,11 +1,12 @@
 from apps.diarymodule.Entry import Entry
 from apps.diarymodule.entryNotFoundException import EntryNotFoundError
 from apps.diarymodule.incorrectpassworderror import IncorrectPasswordError
+from apps.diarymodule.invalidCommandException import UnlockDiary
 
 
 class Diary:
     def __init__(self, username: str, password):
-        self.is_lock = False
+        self.is_lock = True
         self.name = username
         self.password = password
         self.entries = []
@@ -32,12 +33,15 @@ class Diary:
         return len(self.entries)
 
     def find_entry_by_id(self, entry_id_number: int) -> Entry:
-        return_value = 1
         if not self.is_lock:
             for entries in self.entries:
                 if entries.get_entry_id() == entry_id_number:
-                    return_value = entries
-            if return_value == 1:
-                raise EntryNotFoundError
-        return return_value
+                    return entries
+            raise EntryNotFoundError
 
+    def deleteEntry(self, entry_id_number: int):
+        if self.is_lock:
+            self.entries.remove(self.find_entry_by_id(entry_id_number))
+            return "Entry deleted successfully"
+        else:
+            raise UnlockDiary
