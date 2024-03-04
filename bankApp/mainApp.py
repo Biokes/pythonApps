@@ -131,16 +131,16 @@ Enter your choice: """))
             pin = input("Enter your pin: ")
             print("Account Balance: $" + self.bank.check_balance(account_number, pin))
         except InvalidPinError as error:
-            print(error)
+            print(f"{error}")
             self.full_display(self.full_display_menu())
         except InvalidAccountNumberError as error:
-            print(error)
+            print(f"{error}")
             self.full_display(self.full_display_menu())
         except InvalidAmountError as error:
-            print(error)
+            print(f"{error}")
             self.full_display(self.full_display_menu())
         except AccountNotFoundError as error:
-            print(error)
+            print(f"{error}")
             self.full_display(self.full_display_menu())
         finally:
             self.full_display(self.full_display_menu())

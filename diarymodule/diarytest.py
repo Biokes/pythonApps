@@ -3,6 +3,7 @@ from datetime import date
 import pytest
 
 from apps.diarymodule.Entry import Entry
+from apps.diarymodule.diaries import Diaries
 from apps.diarymodule.diary import Diary
 from apps.diarymodule.entryNotFoundException import EntryNotFoundError
 from apps.diarymodule.incorrectpassworderror import IncorrectPasswordError
@@ -89,8 +90,8 @@ class TestDiary:
     def test_findEntry_entryIsFoundById(self):
         diary = Diary("name", "password")
         diary.create_entry("name", "body")
-        entry_gotten = diary.find_entry_by_id(101)
-        assert entry_gotten.get_entry_title() == "name"
+        diary.unlock_diary("password")
+        assert diary.find_entry_by_id(101).get_entry_title() == "name"
 
     def test_findInvalidEntryId_entryIsNotFound_errorIsShown(self):
         diary = Diary("name", "password")
@@ -117,7 +118,8 @@ class TestDiary:
         diary = Diary("name", "password")
         diary.create_entry("name", "body")
         assert diary.is_locked()
-        assert diary.unlock_diary("password")
+        diary.unlock_diary("password")
+        assert not diary.is_locked()
         assert diary.find_entry_by_id(101).get_entry_id() == 101
         assert diary.number_of_entries() == 1
 
@@ -125,6 +127,7 @@ class TestDiary:
         diary = Diary("name", "password")
         assert diary.number_of_entries() == 0
         diary.create_entry("name", "body")
+        diary.unlock_diary("password")
         diary.deleteEntry(101)
         assert diary.number_of_entries() == 0
 
@@ -132,6 +135,26 @@ class TestDiary:
         diary = Diary("name", "password")
         diary.create_entry("name", "body")
         assert diary.is_locked()
+        diary.unlock_diary("password")
+        diary.deleteEntry(101)
+        assert diary.number_of_entries() == 0
+
+    def test_incorrectPasswordCannotDeleteEntry_EntrySizeRemainsTheSame(self):
+        diary = Diary("name", "password")
+        assert diary.number_of_entries() == 0
+        diary.create_entry("name", "body")
+        diary.unlock_diary("password")
+        with pytest.raises(EntryNotFoundError):
+            diary.deleteEntry(109)
+        assert diary.number_of_entries() == 1
+
+    def test_diaryCannotBeAccessedWithPassword(self):
+        diary = Diary("name", "password")
+        assert diary.number_of_entries() == 0
+        diary.create_entry("name", "body")
         with pytest.raises(UnlockDiary):
-            diary.deleteEntry(191)
-        # assert diary.number_of_entries() == 1
+            diary.deleteEntry(109)
+        assert diary.number_of_entries() == 1
+
+    def testDiariesCanAddDiary(self):
+        diaries: Diaries = Diaries()

@@ -40,8 +40,8 @@ class Diary:
             raise EntryNotFoundError
 
     def deleteEntry(self, entry_id_number: int):
-        if self.is_lock:
-            self.entries.remove(self.find_entry_by_id(entry_id_number))
+        if not self.is_lock:
+            entry_to_delete = self.find_entry_by_id(entry_id_number)
+            self.entries.remove(entry_to_delete)
             return "Entry deleted successfully"
-        else:
-            raise UnlockDiary
+        raise UnlockDiary

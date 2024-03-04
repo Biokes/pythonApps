@@ -89,7 +89,7 @@ class TestBank:
         assert error.type == InvalidPinError
         assert bank.check_balance(acc_num, "9087") == 900
 
-    def test_bank_can_deposit_multiple_accounts(self):
+    def test_bank_can_deposit_multiple_accounts_andAllRunTransactions(self):
         bank: Bank = Bank("UBA")
         account = bank.create_account("name", "9087")
         account1 = bank.create_account("name", "9085")
@@ -118,7 +118,7 @@ class TestBank:
         account1 = bank.create_account("name", "9085")
         bank.deposit(account_num, 500)
         account1_num = account1.get_account_number()
-        bank.transfer(account_num, 500, account1_num, "9087")
+        assert bank.transfer(account_num, 500, account1_num, "9087") == "Transfer Successful."
         assert bank.check_balance(account_num, "9087") == 0
         assert bank.check_balance(account1_num, "9085") == 500
 
@@ -129,3 +129,25 @@ class TestBank:
         with pytest.raises(AccountNotFoundError) as error:
             bank.transfer(9087890865, 200, account_num, "9008")
         assert error.type == AccountNotFoundError
+
+    def test_incorrectPinCannotForTransfer_raisesError(self):
+        bank: Bank = Bank("UBA")
+        account = bank.create_account("name", "9087")
+        account_num = account.get_account_number()
+        account1 = bank.create_account("name", "9085")
+        bank.deposit(account_num, 500)
+        account1_num = account1.get_account_number()
+        with pytest.raises(InvalidPinError):
+            bank.transfer(account_num, 500, account1_num, "9089")
+
+    def test_incorrectPinForTransferRaisesError_balanceDoesNotChange(self):
+        bank: Bank = Bank("UBA")
+        account = bank.create_account("name", "9087")
+        account_num = account.get_account_number()
+        account1 = bank.create_account("name", "9085")
+        bank.deposit(account_num, 500)
+        account1_num = account1.get_account_number()
+        with pytest.raises(InvalidPinError):
+            bank.transfer(account_num, 500, account1_num, "9089")
+        assert bank.check_balance(account_num, "9087") == 500
+        assert bank.check_balance(account1_num, "9085") == 0

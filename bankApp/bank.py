@@ -33,7 +33,8 @@ class Bank:
         return "Successful deposit."
 
     def check_balance(self, acc_num: int, pin: str):
-        return self.find_account(acc_num).get_balance(pin)
+        account: Account = self.find_account(acc_num)
+        return account.get_balance(pin)
 
     def withdrawal(self, acc_number: int, amount: float, pin: str):
         self.find_account(acc_number).withdraw(pin, amount)

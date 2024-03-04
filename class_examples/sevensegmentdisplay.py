@@ -72,10 +72,14 @@ class Segments:
         return "   "
 
     def segments(self, binary_digits: str):
-        print(self.get_shape(binary_digits))
+        try:
+            print(self.get_shape(binary_digits))
+        except InvalidNumberError as error:
+            print(error)
+        pass
 
 
 if __name__ == '__main__':
     segment = Segments()
-    number_given = "11011011"
-    segment.segments(number_given)
+    number_given = input("Enter a 8 digits binary number: ")
+    print(segment.segments(number_given))
