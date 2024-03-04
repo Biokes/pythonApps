@@ -5,10 +5,14 @@ from apps.bankApp.invalidNameError import InvalidAmountError, InvalidPinError
 
 
 class TestAccount:
-    def test_account_balance_is_zero_after_creating(self):
-        account: Account = Account("name name", "9087")
-        number = account.get_account_number()
-        assert account.check_balance(number, "9087") == 0.0
+    def test_account_is_not_created_with_invalid_pin(self):
+        with pytest.raises(InvalidPinError):
+            account: Account = Account("name name", "90p7")
+        with pytest.raises(InvalidPinError):
+            account: Account = Account("name name", "ippo")
+        with pytest.raises(InvalidPinError):
+            account: Account = Account("name name", "90909")
+
 
     def test_account_balance_increases_after_deposit(self):
         account: Account = Account("name name", "9087")

@@ -17,30 +17,30 @@ class Bank:
         self.customers = []
 
     def find_account(self, account_number: int) -> Account:
-        for accounts in self.customers:
-            if accounts.get_account_number() == account_number:
-                return accounts
+        for account in self.customers:
+            if account.get_account_number() == account_number:
+                return account
         raise AccountNotFoundError
 
     def remove_account(self, account_number: int, pin: str):
         if self.find_account(account_number).check_pin(pin):
             self.customers.remove(self.find_account(account_number))
-            return
+            return "Account Deleted Successfully."
         raise AccountNotFoundError
 
     def deposit(self, acc_num: int, amount: float):
         self.find_account(acc_num).deposit(acc_num, amount)
-        pass
+        return "Successful deposit."
 
     def check_balance(self, acc_num: int, pin: str):
         return self.find_account(acc_num).get_balance(pin)
 
-    def withdraw(self, acc_number: int, amount: float, pin: str):
+    def withdrawal(self, acc_number: int, amount: float, pin: str):
         self.find_account(acc_number).withdraw(pin, amount)
-        pass
+        return "Withdraw Successful."
 
     def transfer(self, sender_account: int, amount: float, receiver_account: int, pin: str):
-        self.withdraw(sender_account, amount, pin)
+        self.withdrawal(sender_account, amount, pin)
         self.deposit(receiver_account, amount)
-        return
+        return "Transfer Successful."
 

@@ -1,5 +1,4 @@
 
-
 class Drill:
     def __init__(self):
         self.word = ''
@@ -15,5 +14,6 @@ class Drill:
         return self.word.upper()
 
 
-drill = Drill()
-print(drill.__str__())
+if __name__ == '__main__':
+    drill: Drill = Drill()
+    print(drill.__str__())

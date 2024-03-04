@@ -1,4 +1,4 @@
-from apps.diary.diaryClass import Diary
+from apps.diarymodule.diaryClass import Diary
 
 
 class TestDiary:

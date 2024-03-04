@@ -16,7 +16,7 @@ class TestBank:
         account = bank.create_account("name", "9087")
         assert bank.number_of_customers() == 1
         account_number = account.get_account_number()
-        assert bank.find_account(account_number).get_account_number() == account.get_account_number()
+        assert bank.find_account(account_number).get_account_number() == account_number
 
     def test_invalid_account_number_raises_error(self):
         bank: Bank = Bank("UBA")
@@ -26,7 +26,7 @@ class TestBank:
             bank.find_account(account_number)
         assert info.type == AccountNotFoundError
 
-    def test_account_can_be_removed_correct_pin(self):
+    def test_account_can_be_removed_with_correct_pin(self):
         bank: Bank = Bank("UBA")
         account = bank.create_account("name", "9087")
         assert bank.number_of_customers() == 1
@@ -108,7 +108,7 @@ class TestBank:
         assert bank.check_balance(acc_num1, "9085") == 0
         assert bank.check_balance(acc_num, "9087") == 900
         with pytest.raises(InvalidAmountError) as error:
-            bank.withdraw(acc_num2, 900, "9080")
+            bank.withdrawal(acc_num2, 900, "9080")
         assert error.type == InvalidAmountError
 
     def test_bank_can_transfer(self):

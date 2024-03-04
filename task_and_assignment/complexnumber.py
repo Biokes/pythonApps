@@ -43,6 +43,24 @@ class Complex:
         return f'{self.left}j {"+" if self.right > 0 else "-"} {abs(self.right)}i'
 
 
+def formulae(num):
+    return ((2 * 50 * num) / 30) ** (1 / 2)
+
+
+def constants(*args):
+    value = ''
+    count = 0
+    for numbers in list(args):
+        value += f"{int(formulae(numbers)):.0f}"
+        if count == len(list(args)) - 1:
+            value += ""
+        else:
+            value += ","
+        count += 1
+
+    return value
+
+
 if __name__ == '__main__':
     object1 = Complex(2, 3)
     object2 = Complex(5, -2)
@@ -65,24 +83,6 @@ if __name__ == '__main__':
     object1 //= object2
     print(object1, "//=")
     constant = ((2 * 50 * 100) / 30) ** 0.5
-
-
-def formulae(num):
-    return ((2 * 50 * num) / 30) ** (1 / 2)
-
-
-def constants(*args):
-    value = ''
-    count = 0
-    for numbers in list(args):
-        value += f"{int(formulae(numbers)):.0f}"
-        if count == len(list(args)) - 1:
-            value += ""
-        else:
-            value += ","
-        count += 1
-
-    return value
-
-
-print(constants(100, 150, 180))
+    # print(constants(100, 150, 180))
+    date = list(range(50))
+    print(list(map(lambda value: value ** 2, date)))

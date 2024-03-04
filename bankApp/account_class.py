@@ -6,20 +6,26 @@ from apps.bankApp.invalidNameError import InvalidAccountNumberError, InvalidPinE
 
 class Account:
 
-    def __init__(self, name: str, pin: str):
-        number = self.generate_account_number()
-        self._balance = 0.0
-        if len(name.strip()) == 0:
-            raise InvalidNameError
-        if len(pin) != 4 and not pin.isnumeric():
+    def validatePin(self, pin):
+        if not pin.isnumeric() or len(pin) != 4:
             raise InvalidPinError
-        self.name = name
         self.pin = pin
-        self.account_number = number
+
+    def validate_name(self, name: str):
+        if not name:
+            raise InvalidNameError
+        self.name = name
+
+
+    def __init__(self, name: str, pin: str):
+        self._balance = 0.0
+        self.validatePin(pin)
+        self.validate_name(name)
+        self.account_number = self.generate_account_number()
 
     def generate_account_number(self):
         account_number_generated = secrets.randbelow(1299768789)
-        if account_number_generated < 1210000000:
+        if account_number_generated < 1000009999:
             self.generate_account_number()
         return account_number_generated
 
@@ -45,7 +51,7 @@ class Account:
             raise InvalidPinError
         if withdraw_amount > self._balance:
             raise InvalidAmountError
-        if withdraw_amount < 0:
+        if withdraw_amount <= 0:
             raise InvalidAmountError
         self._balance -= withdraw_amount
         return
