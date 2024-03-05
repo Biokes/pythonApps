@@ -7,8 +7,9 @@ from apps.diarymodule.diaries import Diaries
 from apps.diarymodule.diary import Diary
 from apps.diarymodule.entryNotFoundException import EntryNotFoundError
 from apps.diarymodule.incorrectpassworderror import IncorrectPasswordError
-from apps.diarymodule.invalidCommandException import UnlockDiary
-from apps.diarymodule.invalididerror import InvalidId
+from apps.diarymodule.invalidCommandError import UnlockDiary, InvalidCommandError
+from apps.diarymodule.invalidid import UsernameNotFound, InvalidId
+from apps.diarymodule.namealreadyexisterror import NameAlreadyExistError
 
 
 class TestDiary:
@@ -158,3 +159,62 @@ class TestDiary:
 
     def testDiariesCanAddDiary(self):
         diaries: Diaries = Diaries()
+        diary: Diary = Diary("username", "password")
+        diaries.add(diary)
+        assert diaries.length() == 1
+
+    def test_addMultipleDiary_multipleDiaryIsAdded(self):
+        diaries: Diaries = Diaries()
+        diary: Diary = Diary("name1", "password")
+        diaries.add(diary)
+        diary1: Diary = Diary("name2", "password")
+        diary2: Diary = Diary("name3", "password")
+        diaries.add(diary2)
+        diaries.add(diary1)
+        assert diaries.length() == 3
+
+    def test_diariesWithSameNameCannotBeAdded(self):
+        diaries: Diaries = Diaries()
+        diary: Diary = Diary("name1", "password")
+        diaries.add(diary)
+        with pytest.raises(NameAlreadyExistError):
+            diaries.add(diary)
+
+    def test_findDiaryByUsername_diaryIsGotten(self):
+        diaries: Diaries = Diaries()
+        diary: Diary = Diary("name1", "password")
+        diaries.add(diary)
+        assert diaries.find_by_username("name1").username() == "name1"
+
+    def test_findUsernameThatNotExist_raiseError(self):
+        diaries: Diaries = Diaries()
+        diary: Diary = Diary("name1", "password")
+        diaries.add(diary)
+        with pytest.raises(UsernameNotFound):
+            diaries.find_by_username("name")
+
+    def test_invalidNamesCannotBeAdded(self):
+        diaries: Diaries = Diaries()
+        diary: Diary = Diary("", "password")
+        with pytest.raises(InvalidCommandError):
+            diaries.add(diary)
+        diary: Diary = Diary("name", "password")
+        diaries.add(diary)
+        diary = Diary("name", "")
+        with pytest.raises(InvalidCommandError):
+            diaries.add(diary)
+
+    def test_deleteDiary_diaryIsDeleted(self):
+        diaries: Diaries = Diaries()
+        diary: Diary = Diary("", "password")
+        with pytest.raises(InvalidCommandError):
+            diaries.add(diary)
+        diary: Diary = Diary("name", "password")
+        diaries.add(diary)
+        assert diaries.length() == 1
+        diary = Diary("name", "")
+        with pytest.raises(InvalidCommandError):
+            diaries.add(diary)
+        assert diaries.length() == 1
+        diaries.delete("name", "password")
+        assert diaries.length() == 0

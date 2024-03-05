@@ -1,6 +1,6 @@
 from datetime import date
 
-from apps.diarymodule.invalididerror import InvalidId
+from apps.diarymodule.invalidid import InvalidId
 
 
 class Entry:

@@ -1,7 +1,7 @@
 from apps.diarymodule.Entry import Entry
 from apps.diarymodule.entryNotFoundException import EntryNotFoundError
 from apps.diarymodule.incorrectpassworderror import IncorrectPasswordError
-from apps.diarymodule.invalidCommandException import UnlockDiary
+from apps.diarymodule.invalidCommandError import UnlockDiary
 
 
 class Diary:
@@ -13,6 +13,15 @@ class Diary:
 
     def is_locked(self) -> bool:
         return self.is_lock
+
+    def isCorrectPassword(self, password: str):
+        return self.password == password
+
+    def passwordLength(self) -> int:
+        return len(self.password)
+
+    def username(self):
+        return self.name
 
     def unlock_diary(self, password):
         if self.password == password:
