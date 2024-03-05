@@ -24,3 +24,9 @@ class Entry:
 
     def get_entry_title(self):
         return self.title
+
+    def set_title(self, title: str):
+        self.title = title
+
+    def set_body(self, body: str):
+        self.body = body

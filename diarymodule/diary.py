@@ -10,6 +10,7 @@ class Diary:
         self.name = username
         self.password = password
         self.entries = []
+        self.entry: Entry = Entry(1, "", "")
 
     def is_locked(self) -> bool:
         return self.is_lock
@@ -34,9 +35,10 @@ class Diary:
         pass
 
     def create_entry(self, entry_title: str, entry_body):
-        entry: Entry = Entry(len(self.entries) + 101, entry_title, entry_body)
-        self.entries.append(entry)
-        pass
+        self.entry = Entry(len(self.entries) + 101, entry_title, entry_body)
+        self.entries.append(self.entry)
+        self.lock_diary()
+        return self.entry
 
     def number_of_entries(self) -> int:
         return len(self.entries)
@@ -45,12 +47,26 @@ class Diary:
         if not self.is_lock:
             for entries in self.entries:
                 if entries.get_entry_id() == entry_id_number:
+                    self.lock_diary()
                     return entries
+            self.lock_diary()
             raise EntryNotFoundError
+        raise UnlockDiary
+
+    def updateEntry(self, body, title):
+        if not self.is_lock:
+            self.entry.set_body(body)
+            self.entry.set_title(title)
+            return
+        raise UnlockDiary
 
     def deleteEntry(self, entry_id_number: int):
         if not self.is_lock:
             entry_to_delete = self.find_entry_by_id(entry_id_number)
+            if self.number_of_entries() == 0:
+                return "no Entry created yet"
             self.entries.remove(entry_to_delete)
+            self.lock_diary()
             return "Entry deleted successfully"
+        self.lock_diary()
         raise UnlockDiary

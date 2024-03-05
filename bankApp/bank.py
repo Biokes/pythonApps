@@ -7,7 +7,7 @@ class Bank:
     def create_account(self, name: str, pin: str):
         account = Account(name, pin)
         self.customers.append(account)
-        return account
+        return account.__str__()
 
     def number_of_customers(self) -> int:
         return len(self.customers)
