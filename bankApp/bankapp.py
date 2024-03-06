@@ -20,6 +20,7 @@ class BankApp:
             account = self.bank.create_account(full_name, pin)
             messagebox.showwarning("Successful", f"Account Successfully registered\n"
                                                  f"{account}")
+            self.main_menu()
         except InvalidPinError:
             messagebox.showwarning("warning", f"Invalid pin\nPin must be 4 digits")
             self.create_account()
@@ -35,7 +36,7 @@ class BankApp:
                 self.create_account()
             case "2":
                 messagebox.showwarning("Exit", "Exiting............")
-                sys.exit(0)
+                sys.exit(1000)
             case _:
                 messagebox.showwarning("Warning", "You entered an invalid option.")
                 self.welcome_page()
@@ -43,38 +44,146 @@ class BankApp:
     def deposit(self):
         try:
             acc_number = simpledialog.askinteger("Deposit", "Enter account number to deposit: ")
-            amount = simpledialog.askfloat("Deposit", "Enter a valid amount to deposit: ")
+            amount = float(simpledialog.askstring("Deposit", "Enter a valid amount to deposit: "))
             self.bank.deposit(acc_number, amount)
-            print("Successful deposit\n\n")
+            messagebox.showinfo("Successful Deposit", "deposit successful.")
+            self.main_menu()
         except InvalidAmountError as error:
-            messagebox.showwarning("Warning", f"{error}.")
-            self.deposit()
+            messagebox.showwarning("Warning", f"{error} 1.")
+            self.main_menu()
         except InvalidAccountNumberError as error:
-            print(error)
-            self.deposit()
-        except ValueError:
-            print("Something went wrong.")
-            self.deposit()
+            messagebox.showwarning("Warning", f"{error} 2.")
+            self.main_menu()
+        except ValueError as error:
+            messagebox.showwarning("Warning", f"{error} 3.")
+            self.main_menu()
+        except AccountNotFoundError as error:
+            messagebox.showinfo("Warning", f"{error} 4.")
+            self.main_menu()
+
+    def withdraw(self):
+        try:
+            acc_number = simpledialog.askinteger("Withdraw.", "Enter Account Number")
+            amount = float(simpledialog.askstring("Withdraw.", "Enter Amount"))
+            pin = simpledialog.askstring("Withdraw.", "Enter Your pin")
+            withdrawal_response = self.bank.withdrawal(acc_number, amount, pin)
+            messagebox.showinfo("Withdraw.", f"{withdrawal_response}")
+            self.main_menu()
+        except InvalidAmountError as error:
+            messagebox.showinfo("Error", f"{error}")
+            self.main_menu()
+        except InvalidAccountNumberError as error:
+            messagebox.showinfo("Error", f"{error}")
+            self.main_menu()
+        except InvalidPinError as error:
+            messagebox.showinfo("Error", f"{error}")
+            self.main_menu()
+        except AccountNotFoundError as error:
+            messagebox.showinfo("Error", f"{error}")
+            self.main_menu()
+        except ValueError as error:
+            messagebox.showinfo("Error", f"{error}")
+            self.main_menu()
+
+    def transfer(self):
+        try:
+            acc_number = simpledialog.askinteger("Transfer", "Enter sender's account number")
+            receiver_acc_number = simpledialog.askinteger("Transfer", "Enter receiver's account number")
+            amount = float(simpledialog.askstring("Transfer.", "Enter Amount"))
+            pin = simpledialog.askstring("Transfer.", "Enter Your pin")
+            response = self.bank.transfer(acc_number, amount, receiver_acc_number, pin)
+            messagebox.showinfo("Withdraw.", f"{response}")
+            self.main_menu()
+        except InvalidAmountError as error:
+            messagebox.showinfo("Error", f"{error}")
+            self.main_menu()
+        except InvalidAccountNumberError as error:
+            messagebox.showinfo("Error", f"{error}")
+            self.main_menu()
+        except InvalidPinError as error:
+            messagebox.showinfo("Error", f"{error}")
+            self.main_menu()
+        except AccountNotFoundError as error:
+            messagebox.showinfo("Error", f"{error}")
+            self.main_menu()
+        except ValueError as error:
+            messagebox.showinfo("Error", f"{error}")
+            self.main_menu()
+
+    def check_balance(self):
+        try:
+            acc_number = simpledialog.askinteger("Check Balance", "Enter Account number")
+            pin = simpledialog.askstring("Check Balance.", "Enter Your pin")
+            balance = self.bank.check_balance(acc_number, pin)
+            messagebox.showinfo("Check Balance.", f"Account Balance : {balance}")
+            self.main_menu()
+        except InvalidAmountError as error:
+            messagebox.showinfo("Error", f"{error}")
+            self.main_menu()
+        except InvalidAccountNumberError as error:
+            messagebox.showinfo("Error", f"{error}")
+            self.main_menu()
+        except InvalidPinError as error:
+            messagebox.showinfo("Error", f"{error}")
+            self.main_menu()
+        except AccountNotFoundError as error:
+            messagebox.showinfo("Error", f"{error}")
+            self.main_menu()
+        except ValueError as error:
+            messagebox.showinfo("Error", f"{error}")
+            self.main_menu()
+
+    def close_account(self):
+        try:
+            acc_number = simpledialog.askinteger("Transfer", "Enter Account number")
+            pin = simpledialog.askstring("Transfer.", "Enter Your pin")
+            response = self.bank.remove_account(acc_number, pin)
+            messagebox.showinfo("Withdraw.", f"{response}")
+            self.main_menu()
+        except InvalidAmountError as error:
+            messagebox.showinfo("Error", f"{error}")
+            self.main_menu()
+        except InvalidAccountNumberError as error:
+            messagebox.showinfo("Error", f"{error}")
+            self.main_menu()
+        except InvalidPinError as error:
+            messagebox.showinfo("Error", f"{error}")
+            self.main_menu()
+        except AccountNotFoundError as error:
+            messagebox.showinfo("Error", f"{error}")
+            self.main_menu()
+        except ValueError as error:
+            messagebox.showinfo("Error", f"{error}")
+            self.main_menu()
 
     def main_menu(self):
         option = simpledialog.askstring("Home page", """
-                                welcome to Mavericks Bank🤭🤭🤭
-                                1. create account
-                                2. Deposit
-                                3. Withdraw
-                                4. Transfer
-                                5. check Balance
-                                6. Close Account
-                                7. Exit""")
+welcome to Mavericks Bank🤭🤭🤭
+1. create account
+2. Deposit
+3. Withdraw
+4. Transfer
+5. check Balance
+6. Close Account
+7. Exit""")
         match option:
             case "1":
                 self.create_account()
             case "2":
                 self.deposit()
+            case "3":
+                self.withdraw()
+            case "4":
+                self.transfer()
+            case "5":
+                self.check_balance()
+            case "6":
+                self.close_account()
+            case "7":
+                sys.exit(1000)
             case _:
                 messagebox.showwarning("Error", "Wrong input\nselect form 1-7")
                 self.main_menu()
-
 
 #     def landing_page(self):
 #         choice = simpledialog.askstring("Welcome Message",
@@ -112,21 +221,7 @@ class BankApp:
 #
 #     def case_three(self):
 #         try:
-#             print("\n\n<<<<<<<<Withdraw Menu>>>>>>>>>>\n\n")
-#             acc_number = int(input("Enter account number: "))
-#             amount = float(input("Enter amount: "))
-#             pin = input("Enter your pin: ")
-#             print(self.bank.withdrawal(acc_number, amount, pin))
-#             self.full_display_menu()
-#         except InvalidAmountError as error:
-#             print(error)
-#             self.case_three()
-#         except InvalidAccountNumberError as error:
-#             print(error)
-#             self.case_three()
-#         except InvalidPinError as error:
-#             print(error)
-#             self.case_three()
+#
 #         finally:
 #             self.full_display(self.full_display_menu())
 #
