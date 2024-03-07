@@ -1,5 +1,4 @@
 import unittest
-from apps import bike
 
 class MyTestCase(unittest.TestCase):
     def test_something(self):
