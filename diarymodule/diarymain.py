@@ -21,12 +21,18 @@ class DiaryMain:
     def landing_page(self):
         option = simpledialog.askstring("Home page", """
         select for the following options
-        1. create Diary
-        2. Exit""")
+        1. Create Diary
+        2. Find Diary By username
+        3. Delete Diary
+        4. Exit""")
         match option:
             case "1":
                 self.createDiary()
             case "2":
+                self.findDiaryByUsername()
+            case "3":
+                self.deleteDiary()
+            case "4":
                 sys.exit(0)
             case _:
                 self.landing_page()
@@ -38,12 +44,21 @@ class DiaryMain:
             self.diary = Diary(name, password)
             self.diaries.add(self.diary)
             messagebox.showinfo("Successful", "Diary created successfully.")
-            self.main_menu()
+            self.diary_menu()
         except InvalidCommandError:
             messagebox.showinfo("Warning", "Invalid username or pass word entered.\nEnter a valid name and password.")
             self.createDiary()
 
-    def main_menu(self):
+    def findDiaryByUsername(self):
+        try:
+            username = simpledialog.askstring("Find Diary By UserName", "Enter Diary Username")
+            self.diary = self.diaries.find_by_username(username)
+            self.diary_menu()
+        except UsernameNotFound:
+            messagebox.showinfo("Warning", "Invalid username or pass word entered.\nEnter a valid name and password.")
+            self.landing_page()
+
+    def diary_menu(self):
         try:
             response = simpledialog.askstring("MainMenu", """
             1. Create Entry
@@ -63,11 +78,11 @@ class DiaryMain:
                     sys.exit(0)
                 case _:
                     messagebox.showinfo("Invalid Choice", "You wan Enter Wrong input abi?\nIdiot😡😡😡😡😡😡")
-                    self.main_menu()
+                    self.diary_menu()
         except (IncorrectPasswordError, UnlockDiary, InvalidCommandError,
                 UsernameNotFound, InvalidId, NameAlreadyExistError):
             messagebox.showinfo("Invalid Choice", "You wan Enter Wrong input abi?\nIdiot😡😡😡😡😡😡")
-            self.main_menu()
+            self.diary_menu()
 
     def createEntry(self):
         entry_title = simpledialog.askstring("Entry Title", "Pls Enter Your Entry Title ")
@@ -77,7 +92,7 @@ class DiaryMain:
             self.createEntry()
         entry = self.diary.create_entry(entry_title, entry_body)
         messagebox.showinfo("Successful", entry.__str__())
-        self.main_menu()
+        self.diary_menu()
 
     def update_Entry(self):
         password = simpledialog.askstring("unlock Diary", "Enter Diary password: ")
@@ -93,7 +108,7 @@ class DiaryMain:
             id_number = simpledialog.askinteger("Delete Entry", "Pls Enter the Entry id")
             response = self.diary.deleteEntry(id_number)
             messagebox.showinfo("Delete Entry", response)
-            self.main_menu()
+            self.diary_menu()
         except InvalidCommandError:
             messagebox.showinfo("Warning", "Invalid password.")
             self.delete_Entry()
@@ -109,6 +124,17 @@ class DiaryMain:
         except EntryNotFoundError:
             messagebox.showinfo("Warning", "Invalid password.")
             self.delete_Entry()
+
+    def deleteDiary(self):
+        try:
+            username = simpledialog.askstring("Delete Diary", "Enter Diary UserName")
+            password = simpledialog.askstring("Delete Diary", "Enter Diary Password")
+            self.diaries.delete_diary(username, password)
+            messagebox.showinfo("Delete Diary", "Diary Deleted successfully")
+            self.landing_page()
+        except InvalidCommandError as error:
+            messagebox.showerror("Delete Diary", f"{error}")
+            self.landing_page()
 
 
 if __name__ == "__main__":

@@ -216,5 +216,5 @@ class TestDiary:
         with pytest.raises(InvalidCommandError):
             diaries.add(diary)
         assert diaries.length() == 1
-        diaries.delete("name", "password")
+        diaries.delete_diary("name", "password")
         assert diaries.length() == 0

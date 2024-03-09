@@ -32,7 +32,7 @@ class Diaries:
                 return diary
         raise UsernameNotFound
 
-    def delete(self, diary_username: str, password: str):
+    def delete_diary(self, diary_username: str, password: str):
         for diary in self.list_of_diaries:
             if diary.username() == diary_username:
                 if diary.isCorrectPassword(password):
