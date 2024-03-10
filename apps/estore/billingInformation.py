@@ -1,4 +1,4 @@
-from apps.estore.credit_card import CreditCard
+from apps.apps.estore.credit_card import CreditCard
 
 
 class Billing_info:
