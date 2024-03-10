@@ -1,4 +1,4 @@
-from apps.apps.estore.cardTypes import CardType
+from apps.apps import CardType
 
 
 class CreditCard:
