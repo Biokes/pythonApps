@@ -1,17 +1,18 @@
-from apps.apps import CardType
+from apps.apps.estore.cardTypes import CardType
 
 
 class CreditCard:
 
-    def __init__(self, cvv: str, card_expirationDate: str, creditCardNumber: str, card_type: CardType, name_on_card: str):
+    def __init__(self, name_on_card: str, cvv: str, card_expiration_date: str, credit_card_number: str,
+                 card_type: CardType):
         self.name_on_card = name_on_card
         if len(cvv) in 3:
             self.cvv = int(cvv)
         else:
             raise ValueError("invalid cvv provided.")
-        if creditCardNumber.isnumeric() and len(creditCardNumber) in (13,14,15,16):
-            self.creditCardNumber = creditCardNumber
+        if credit_card_number.isnumeric() and len(credit_card_number) in (13, 14, 15, 16):
+            self.creditCardNumber = credit_card_number
         else:
             raise ValueError("invalid cardNumber")
-        self.card_expirationDate = card_expirationDate
+        self.card_expirationDate = credit_card_number
         self.card_type = card_type
