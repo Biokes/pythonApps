@@ -1,10 +1,10 @@
-from apps.apps.estore.address import Address
-from apps.apps.estore.cardTypes import CardType
-from apps.apps.estore.credit_card import CreditCard
-from apps.apps.estore.customer import Customer
+from apps.codedApps.estore.address import Address
+from apps.codedApps.estore.cardTypes import CardType
+from apps.codedApps.estore.credit_card import CreditCard
+from apps.codedApps.estore.customer import Customer
 
 
-class EStoreTest:
+class StoreTest:
 
     def test_customerAddBillingInfo_BillingInfoIsAdded(self):
         home_address: Address = Address("12", "Customer street", "meiran", "Lag", "Naija")

@@ -1,4 +1,4 @@
-from apps.apps import Product
+from apps.codedApps import Product
 
 
 class Items:

@@ -1,4 +1,4 @@
-from apps.apps import CreditCard
+from apps.codedApps import CreditCard
 
 
 class Billing_info:

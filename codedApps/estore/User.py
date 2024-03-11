@@ -1,4 +1,4 @@
-from apps.apps.estore.address import Address
+from apps.codedApps.estore.address import Address
 
 
 class User:

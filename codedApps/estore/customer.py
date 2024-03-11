@@ -1,6 +1,6 @@
-from apps.apps.estore.address import Address
-from apps.apps.estore.User import User
-from apps.apps.estore.credit_card import CreditCard
+from apps.codedApps.estore.address import Address
+from apps.codedApps.estore.User import User
+from apps.codedApps.estore.credit_card import CreditCard
 
 
 class Customer(User):

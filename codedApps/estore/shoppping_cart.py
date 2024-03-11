@@ -1,4 +1,4 @@
-from apps.apps.estore.items import Items
+from apps.codedApps.estore.items import Items
 
 
 class Cart:
