@@ -11,5 +11,5 @@ class EStoreTest:
         customer: Customer = Customer("biokes", 17, home_address, "Email@email.com", "password")
         delivery_address: Address = Address("1", "receiver Street", "sabo", "lag", "naija")
         card: CreditCard = CreditCard("name ", "123", "12/27", "1234098765432", CardType.MASTERCARD, )
-        customer.addBilllingInfo("recievers Name", "90908978", delivery_address, card)
+        customer.add_billling_info("receivers Name", "90908978", delivery_address, card)
         assert customer.get_number_of_billing_info() == 1
