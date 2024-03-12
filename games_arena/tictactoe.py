@@ -105,7 +105,6 @@ class TicTacToe:
                 print("Invalid input", f"\n{error}\n\n")
                 self.player_one()
 
-
     def __str__(self):
         output = f"  {"-"} {"-"} {"-"} {"-"} {"-"} {"-"} {"-"} {"-"}\n"
         for row in range(3):
@@ -127,6 +126,7 @@ class TicTacToe:
             try:
                 choice = int(input("Player Two Turn: \nEnter a number between 1 and 9: "))
                 if 1 <= choice <= 9:
+                    self.count += 1
                     return choice
                 else:
                     print("Invalid input! Please enter a number between 1 and 9.")
@@ -171,9 +171,8 @@ class TicTacToe:
                 self.__game2ErrorCheck()
             print("Winner::\n", self.result())
         except KeyboardInterrupt as error:
-            print(error)
+            print(error, "causing the game to end abruptly\nThe game resta")
             self.start_game()
-
 
 
 if __name__ == "__main__":
