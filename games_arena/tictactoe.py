@@ -1,19 +1,19 @@
-from apps.games_arena.celltakenerror import CellTakenError
-# from apps.games_arena.cellvalue import Cellvalues
 import tkinter as display
 
+from apps.games_arena.cellvalue import Cellvalues
 
-# from tkinter import simpledialog, messagebox
+
 
 class TicTacToe:
     root = display.Tk()
     root.withdraw()
-#     def __init__(self):
-#         self.game_board = [[Cellvalues.EMPTY, Cellvalues.EMPTY, Cellvalues.EMPTY],
-#                            [Cellvalues.EMPTY, Cellvalues.EMPTY, Cellvalues.EMPTY],
-#                            [Cellvalues.EMPTY, Cellvalues.EMPTY, Cellvalues.EMPTY]]
-#         self.count = 0
-#
+
+    def __init__(self):
+        self.game_board = [[Cellvalues.EMPTY, Cellvalues.EMPTY, Cellvalues.EMPTY],
+                           [Cellvalues.EMPTY, Cellvalues.EMPTY, Cellvalues.EMPTY],
+                           [Cellvalues.EMPTY, Cellvalues.EMPTY, Cellvalues.EMPTY]]
+        self.count = 0
+
 #     def get_board_cell(self, cell_number: int):
 #         row = (cell_number - 1) // 3
 #         column = (cell_number - 1) % 3
