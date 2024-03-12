@@ -155,8 +155,10 @@ class TicTacToe:
         return string
 
     def start_game(self):
-        while self.result() != None:
-            self.player_one()
+        self.display_board()
+        self.play(self.player_one())
+        self.display_board()
+
 
 
 if __name__ == "__main__":
