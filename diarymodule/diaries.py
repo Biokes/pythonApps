@@ -18,13 +18,13 @@ class Diaries:
         return len(self.list_of_diaries)
 
     def __validatenameAndPassword(self, diary: Diary):
-        if diary.username in self.diary_names:
+        if diary.username() in self.diary_names:
             raise NameAlreadyExistError
-        self.diary_names.append(diary.username())
         if len(diary.username()) == 0:
             raise InvalidCommandError
         if diary.passwordLength() == 0:
             raise InvalidCommandError
+        self.diary_names.append(diary.username())
 
     def find_by_username(self, username: str) -> Diary:
         for diary in self.list_of_diaries:

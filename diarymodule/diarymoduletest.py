@@ -202,7 +202,7 @@ class TestDiary:
         diary: Diary = Diary("name", "password")
         diaries.add(diary)
         diary = Diary("name", "")
-        with pytest.raises(InvalidCommandError):
+        with pytest.raises(NameAlreadyExistError):
             diaries.add(diary)
 
     def test_deleteDiary_diaryIsDeleted(self):
@@ -214,8 +214,26 @@ class TestDiary:
         diaries.add(diary)
         assert diaries.length() == 1
         diary = Diary("name", "")
-        with pytest.raises(InvalidCommandError):
+        with pytest.raises(NameAlreadyExistError):
             diaries.add(diary)
         assert diaries.length() == 1
         diaries.delete_diary("name", "password")
         assert diaries.length() == 0
+
+    def test_createDiaryWithEmpty_raisesError(self):
+        diaries: Diaries = Diaries()
+        diary: Diary = Diary("", "password")
+        with pytest.raises(InvalidCommandError):
+            diaries.add(diary)
+        assert diaries.length() == 0
+        diary: Diary = Diary("name", "password")
+        diaries.add(diary)
+        assert diaries.length() == 1
+        diary = Diary("name1", "")
+        with pytest.raises(InvalidCommandError):
+            diaries.add(diary)
+        assert diaries.length() == 1
+        diary1 = Diary("", "")
+        with pytest.raises(InvalidCommandError):
+            diaries.add(diary1)
+        assert diaries.length() == 1
