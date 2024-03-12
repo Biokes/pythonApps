@@ -91,17 +91,20 @@ class TicTacToe:
         pass
 
     def player_one(self):
-        try:
-            choice = int(input("Player One Turn: \nEnter a number between 1 and 9: "))
-            while choice < 1 or choice > 9:
-                choice = int(input("\nEnter a VALID NUMBER  BETWEEN 1 AND 9 :: "))
-            return choice
-        except TypeError as error:
-            print("Invalid input", f"\n{error}")
-            self.player_one()
-        except ValueError as error:
-            print("Invalid input", f"\n{error}")
-            self.player_one()
+        while True:
+            try:
+                choice = int(input("Player One Turn: \nEnter a number between 1 and 9: "))
+                if 1 <= choice <= 9:
+                    return choice
+                else:
+                    print("Invalid input! Please enter a number between 1 and 9.")
+            except TypeError as error:
+                print("Invalid input", f"\n{error}\n\n")
+                self.player_one()
+            except ValueError as error:
+                print("Invalid input", f"\n{error}\n\n")
+                self.player_one()
+
 
     def __str__(self):
         output = f"  {"-"} {"-"} {"-"} {"-"} {"-"} {"-"} {"-"} {"-"}\n"
@@ -120,17 +123,19 @@ class TicTacToe:
         return f"{self.display_numbers()}\n{self.__str__()}"
 
     def player_two(self):
-        try:
-            choice = int(input("Player Two Turn:\nEnter a number between 1 and 9:  "))
-            while choice < 1 or choice > 9:
-                choice = int(input("\nEnter a VALID NUMBER  BETWEEN 1 AND 9 :: "))
-            return choice
-        except TypeError as error:
-            print("Invalid input", f"\n{error}\n\n")
-            self.player_two()
-        except ValueError as error:
-            print("Invalid input", f"\n{error}\n\n")
-            self.player_two()
+        while True:
+            try:
+                choice = int(input("Player Two Turn: \nEnter a number between 1 and 9: "))
+                if 1 <= choice <= 9:
+                    return choice
+                else:
+                    print("Invalid input! Please enter a number between 1 and 9.")
+            except TypeError as error:
+                print("Invalid input", f"\n{error}\n\n")
+                self.player_two()
+            except ValueError as error:
+                print("Invalid input", f"\n{error}\n\n")
+                self.player_two()
 
 
     def display_numbers(self):
@@ -141,14 +146,28 @@ class TicTacToe:
             string += f" {numbers + 1} |"
         return string
 
+    def __game1ErrorCheck(self):
+        try:
+            self.play(self.player_one())
+        except CellTakenError as error:
+            print(error)
+            self.__game1ErrorCheck()
+
+    def __game2ErrorCheck(self):
+        try:
+            self.play(self.player_two())
+        except CellTakenError as error:
+            print(error)
+            self.__game2ErrorCheck()
+
     def start_game(self):
         while self.result() is None or self.count != 9:
             print("Board\n\n", f" {self.display_board()}\n\n")
-            self.play(self.player_one())
+            self.__game1ErrorCheck()
             print("Board: \n\n", f"{self.display_board()}\n\n")
             if self.result() is not None:
                 break
-            self.play(self.player_two())
+            self.__game2ErrorCheck()
         print("Winner::\n", self.result())
 
 
