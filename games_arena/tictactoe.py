@@ -88,7 +88,7 @@ class TicTacToe:
 
     def player_one(self):
         try:
-            choice = simpledialog.askinteger("Player One Turn", "Enter a number between 1 and 9")
+            choice = int(simpledialog.askstring("Player One Turn", "Enter a number between 1 and 9"))
             while choice < 1 or choice > 9:
                 self.player_one()
             self.validate_cell(choice)
@@ -110,14 +110,14 @@ class TicTacToe:
             self.player_one()
 
     def __str__(self):
-        output = f"{"-"} {"-"} {"-"} {"-"} {"-"} {"-"} {"-"}\n"
+        output = f"{"-"} {"-"} {"-"} {"-"} {"-"} {"-"} {"-"} {"-"}\n"
         for row in range(3):
             for column in range(3):
                 if self.game_board[row][column] == Cell_Values.EMPTY:
-                    output += f"{" "} {" | "}"
+                    output += f" {"  "} {" | "}"
                 else:
-                    output += f"{self.game_board[row][column]} {" | "}"
-            output += f"\n {"-"} {"-"} {"-"} {"-"} {"-"} {"-"} {"-"}\n"
+                    output += f" {self.game_board[row][column]} {" | "}"
+            output += f"\n {"-"} {"-"} {"-"} {"-"} {"-"} {"-"} {"-"} {"-"}\n"
         return output
 
     def display_board(self):
@@ -125,7 +125,7 @@ class TicTacToe:
 
     def player_two(self):
         try:
-            choice = simpledialog.askinteger("Player Two Turn", "Enter a number between 1 and 9")
+            choice = int(simpledialog.askstring("Player Two Turn", "Enter a number between 1 and 9"))
             while choice < 1 or choice > 9:
                 choice = simpledialog.askinteger("Player Two Turn", "Enter a VALID NUMBER  BETWEEN 1 AND 9")
             self.validate_cell(choice)
@@ -155,10 +155,15 @@ class TicTacToe:
         return string
 
     def start_game(self):
-        self.display_board()
-        self.play(self.player_one())
-        self.display_board()
-
+        while self.result() is not None or self.count != 9:
+            messagebox.showinfo("Board", f"{self.display_board()}")
+            if self.result() is not None:
+                break
+            self.play(self.player_one())
+            messagebox.showinfo("Board", f"{self.display_board()}")
+            self.play(self.player_two())
+        winner = self.result()
+        messagebox.showinfo("Winner", f"{winner}")
 
 
 if __name__ == "__main__":
