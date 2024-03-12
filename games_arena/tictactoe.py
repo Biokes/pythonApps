@@ -101,6 +101,9 @@ class TicTacToe:
         except CellTakenError:
             messagebox.showerror("Invalid input", "You Entered the wrong input")
             self.player_one()
+        except TypeError:
+            messagebox.showerror("Invalid input", "You Entered the wrong input")
+            self.player_two()
         except ValueError:
             messagebox.showerror("Invalid input", "You Entered the wrong input")
             self.player_one()
@@ -147,6 +150,9 @@ class TicTacToe:
         except ValueError:
             messagebox.showerror("Invalid input", "You Entered the wrong input")
             self.player_two()
+        except TypeError:
+            messagebox.showerror("Invalid input", "You Entered the wrong input")
+            self.player_two()
         except Exception:
             messagebox.showerror("Invalid input", "You Entered the wrong input")
             self.player_two()
@@ -174,3 +180,4 @@ class TicTacToe:
 if __name__ == "__main__":
     game = TicTacToe()
     game.start_game()
+
