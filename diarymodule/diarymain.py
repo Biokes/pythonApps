@@ -37,6 +37,17 @@ class DiaryMain:
             case _:
                 self.landing_page()
 
+    def deleteDiary(self):
+        try:
+            username = simpledialog.askstring("Delete Diary", "Enter Diary UserName")
+            password = simpledialog.askstring("Delete Diary", "Enter Diary Password")
+            self.diaries.delete_diary(username, password)
+            messagebox.showinfo("Delete Diary", "Diary Deleted successfully")
+            self.landing_page()
+        except InvalidCommandError as error:
+            messagebox.showerror("Delete Diary", f"{error}")
+            self.landing_page()
+
     def createDiary(self):
         try:
             name = simpledialog.askstring("Create Diary", "Pls Enter a valid username for your diary")
@@ -138,34 +149,24 @@ class DiaryMain:
             self.diary.unlock_diary(password)
             id_number = simpledialog.askinteger("Delete Entry", "Pls Enter the Entry id")
             response = self.diary.deleteEntry(id_number)
-            messagebox.showinfo("Delete Entry", response)
+            messagebox.showinfo("Delete Entry", f"{response}\n Diary is now Locked.")
+            self.diary.lock_diary()
             self.diary_menu()
         except InvalidCommandError:
             messagebox.showinfo("Warning", "Invalid UserName orPassword.")
             self.delete_Entry()
         except ValueError:
             messagebox.showinfo("Warning", "Invalid character for id.")
-            self.delete_Entry()
+            self.diary_menu()
         except IncorrectPasswordError:
             messagebox.showinfo("Warning", "Invalid password.")
-            self.delete_Entry()
+            self.diary_menu()
         except UnlockDiary:
-            messagebox.showinfo("Warning", "Invalid character for id.")
-            self.delete_Entry()
+            messagebox.showinfo("Warning", "Diary is Locked\nEnter The correct password to unlock.")
+            self.diary_menu()
         except EntryNotFoundError:
             messagebox.showinfo("Warning", "Invalid password.")
-            self.delete_Entry()
-
-    def deleteDiary(self):
-        try:
-            username = simpledialog.askstring("Delete Diary", "Enter Diary UserName")
-            password = simpledialog.askstring("Delete Diary", "Enter Diary Password")
-            self.diaries.delete_diary(username, password)
-            messagebox.showinfo("Delete Diary", "Diary Deleted successfully")
-            self.landing_page()
-        except InvalidCommandError as error:
-            messagebox.showerror("Delete Diary", f"{error}")
-            self.landing_page()
+            self.diary_menu()
 
 
 if __name__ == "__main__":
