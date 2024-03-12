@@ -22,8 +22,9 @@ class TicTacToe:
             raise CellTakenError
 
     def validate_number(self, number: int):
-        if number < 1 or number > 10:
+        if number < 1 or number > 9:
             raise ValueError
+        return number
 
     def play(self, cell_number: int):
         self.validate_number(cell_number)
