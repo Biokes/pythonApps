@@ -26,7 +26,6 @@ class TicTacToe:
             raise CellTakenError
 
     def play(self, cell_number: int):
-        self.validate_number(cell_number)
         self.validate_cell(cell_number)
         row = (cell_number - 1) // 3
         column = (cell_number - 1) % 3
@@ -164,8 +163,11 @@ class TicTacToe:
                 number = self.player_one()
             self.play(number)
             messagebox.showinfo("Game Board", f"{self.display_board()}")
-            if self.result() != "contd":
-                self.play(self.player_two())
+            if self.result() == "contd":
+                number = self.player_two()
+                while number < 1 or number > 9:
+                    number = self.player_two()
+                self.play(number)
                 messagebox.showinfo("Game Board", f"{self.display_board()}")
             else:
                 return messagebox.showinfo("Winner Declaration.", f"{self.result()}")
