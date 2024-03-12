@@ -43,3 +43,10 @@ class TestTictactoe:
             tictactoe.play(12)
         with pytest.raises(Exception):
             tictactoe.play(":")
+        tictactoe.play(1)
+        tictactoe.play(2)
+        tictactoe.play(9)
+        tictactoe.play(5)
+        tictactoe.play(6)
+        tictactoe.play(8)
+        assert tictactoe.result() == "Player Two wins."
