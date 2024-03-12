@@ -150,6 +150,14 @@ class TicTacToe:
             messagebox.showerror("Invalid input", "You Entered the wrong input")
             self.player_one()
 
+    def display_numbers(self):
+        string = ""
+        for numbers in range(9):
+            if numbers % 3 == 0:
+                string += "\n "
+            string += numbers
+        return string
+
     def start_game(self):
         for number in range(5):
             self.play(self.player_one())
