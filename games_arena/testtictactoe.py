@@ -1,5 +1,6 @@
 import pytest
 
+from apps.games_arena.celltakenerror import CellTakenError
 from apps.games_arena.cellvalue import Cellvalues
 from apps.games_arena.tictactoe import TicTacToe
 
@@ -20,13 +21,12 @@ class TestTictactoe:
         tictactoe: TicTacToe = TicTacToe()
         tictactoe.play(1)
         assert tictactoe.get_board_cell(1) == Cellvalues.X
-        tictactoe.play(1)
-        assert tictactoe.get_board_cell(1) == Cellvalues.O
+        tictactoe.play(5)
+        assert tictactoe.get_board_cell(5) == Cellvalues.O
 
     def test_playOnFilledCell_raisesError(self):
         tictactoe: TicTacToe = TicTacToe()
         tictactoe.play(1)
         assert tictactoe.get_board_cell(1) == Cellvalues.X
-        tictactoe.play(1)
         with pytest.raises(CellTakenError):
-            assert tictactoe.get_board_cell(1) == Cellvalues.O
+            tictactoe.play(1)
