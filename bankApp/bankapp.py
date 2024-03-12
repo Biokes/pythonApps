@@ -13,9 +13,6 @@ class BankApp:
         self.root = display.Tk()
         self.root.withdraw()
 
-    def __init__(self):
-        self.name = "name"
-
     def create_account(self):
         try:
             full_name = simpledialog.askstring("Create Account Menu", "Enter your full name")
