@@ -26,3 +26,6 @@ class TicTacToe:
         else:
             self.board[row][column] = Cellvalues.O
         self.count += 1
+
+    def result(self):
+        pass

@@ -30,3 +30,9 @@ class TestTictactoe:
         assert tictactoe.get_board_cell(1) == Cellvalues.X
         with pytest.raises(CellTakenError):
             tictactoe.play(1)
+
+    def test_endGame_Player_wins_or_Draw(self):
+        tictactoe: TicTacToe = TicTacToe()
+        for numbers in range(1, 10):
+            tictactoe.play(numbers)
+        assert tictactoe.result() == "Draw"
