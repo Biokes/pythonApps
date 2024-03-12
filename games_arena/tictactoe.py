@@ -32,7 +32,6 @@ class TicTacToe:
     def validate_number(self, number: int):
         if number not in (1, 2, 3, 4, 5, 6, 7, 8, 9):
             number = simpledialog.askinteger("Invalid number", "Enter a number between 1 and 9")
-
         return number
 
     def play(self, cell_number: int):
@@ -95,8 +94,10 @@ class TicTacToe:
         elif self.game_board[2][0] == Cell_Values.O and self.game_board[1][1] == Cell_Values.O and self.game_board[0][
             2] == Cell_Values.O:
             return "Player Two wins."
-        else:
+        elif self.count == 9:
             return "Draw"
+        else:
+            return "contd."
         pass
 
     def player_one(self):
@@ -121,29 +122,19 @@ class TicTacToe:
             messagebox.showerror("Invalid input", "You Entered the wrong input")
             self.player_one()
 
-    def __get_board_values(self):
-        list1 = []
-        for numbers in range(9):
-            list1.append(self.get_board_cell(numbers + 1))
-        return list1
-
     def __str__(self):
-        list1 = self.__get_board_values()
-        count = 0
-        return_value = f"{"-"}{"-"}{"-"}{"-"}{"-"}{"-"}{"-"}{"-"}{"-"}\n"
-        for values in list1:
-            if values == Cellvalues.EMPTY:
-                return_value += f" {" "} |"
-                count += 1
-            else:
-                return_value += f" {values} |"
-                count += 1
-            if count % 3 == 0:
-                return_value += "\n" + f"{"-"}{"-"}{"-"}{"-"}{"-"}{"-"}{"-"}{"-"}{"-"}\n"
-        return return_value
+        output = f"{"-"} {"-"} {"-"} {"-"} {"-"} {"-"} {"-"}\n"
+        for row in range(3):
+            for column in range(3):
+                if self.game_board[row][column] == Cell_Values.EMPTY:
+                    output += f"{" "} {" | "}"
+                else:
+                    output += f"{self.game_board[row][column]} {" | "}"
+            output += f"\n {"-"} {"-"} {"-"} {"-"} {"-"} {"-"} {"-"}\n"
+        return output
 
     def display_board(self):
-        return self.__str__()
+        return f"{self.display_numbers()}\n{self.__str__()}"
 
     def player_two(self):
         try:
@@ -171,16 +162,16 @@ class TicTacToe:
         string = ""
         for numbers in range(9):
             if numbers % 3 == 0:
-                string += "\n "
-            string += numbers
+                string += "\n| "
+            string += f" {numbers + 1} |"
         return string
 
     def start_game(self):
         messagebox.showinfo("Game Board", f"{self.display_board()}")
-        for number in range(5):
+        while self.result() != "contd":
             self.play(self.player_one())
             messagebox.showinfo("Game Board", f"{self.display_board()}")
-            if self.count != 9 and:
+            if self.result() != "contd":
                 self.play(self.player_two())
                 messagebox.showinfo("Game Board", f"{self.display_board()}")
             else:
