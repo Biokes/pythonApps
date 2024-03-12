@@ -64,7 +64,8 @@ class DiaryMain:
             1. Create Entry
             2. Update Entry
             3. Delete Entry
-            4. Exit
+            4. Main menu
+            5. Exit
             """)
             match response:
                 case "1":
@@ -74,6 +75,8 @@ class DiaryMain:
                 case "3":
                     self.delete_Entry()
                 case "4":
+                    self.landing_page()
+                case "5":
                     messagebox.showinfo("Exit", "Exiting...........")
                     sys.exit(0)
                 case _:
@@ -95,11 +98,28 @@ class DiaryMain:
         self.diary_menu()
 
     def update_Entry(self):
-        password = simpledialog.askstring("unlock Diary", "Enter Diary password: ")
-        self.diary.unlock_diary(password)
-        title = simpledialog.askstring("update Entry", "Enter Entry name to updated: ")
-        body = simpledialog.askstring("Update Entry Body", "Enter your message")
-        self.diary.updateEntry(body, title)
+        try:
+            password = simpledialog.askstring("unlock Diary", "Enter Diary password: ")
+            self.diary.unlock_diary(password)
+            title = simpledialog.askstring("update Entry", "Enter Entry name to updated: ")
+            body = simpledialog.askstring("Update Entry Body", "Enter your message")
+            self.diary.updateEntry(body, title)
+            self.diary_menu()
+        except InvalidCommandError:
+            messagebox.showinfo("Warning", "Invalid password.")
+            self.diary_menu()
+        except ValueError:
+            messagebox.showinfo("Warning", "Invalid character for id.")
+            self.diary_menu()
+        except IncorrectPasswordError:
+            messagebox.showinfo("Warning", "Invalid password.")
+            self.diary_menu()
+        except UnlockDiary:
+            messagebox.showinfo("Warning", "Invalid character for id.")
+            self.diary_menu()
+        except EntryNotFoundError:
+            messagebox.showinfo("Warning", "Invalid password.")
+            self.diary_menu()
 
     def delete_Entry(self):
         try:

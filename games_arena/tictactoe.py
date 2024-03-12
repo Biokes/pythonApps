@@ -22,8 +22,8 @@ class TicTacToe:
             raise CellTakenError
 
     def validate_number(self, number: int):
-        while number not in (1, 2, 3, 4, 5, 6, 7, 8, 9):
-            choice = simpledialog.askinteger("Player One Turn", "Enter a number between 1 and 9")
+        while number not in [1, 2, 3, 4, 5, 6, 7, 8, 9]:
+            choice = simpledialog.askinteger("Invalid number", "Enter a number between 1 and 9")
         return number
 
     def play(self, cell_number: int):
@@ -175,10 +175,9 @@ class TicTacToe:
                 self.play(self.player_two())
                 messagebox.showinfo("Game Board", f"{self.display_board()}")
             else:
-                return self.result()
+                return messagebox.showinfo("Winner Declaration.", f"{self.result()}")
 
 
 if __name__ == "__main__":
     game = TicTacToe()
     game.start_game()
-
