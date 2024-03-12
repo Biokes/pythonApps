@@ -84,15 +84,13 @@ class TicTacToe:
         elif self.game_board[2][0] == Cell_Values.O and self.game_board[1][1] == Cell_Values.O and self.game_board[0][
             2] == Cell_Values.O:
             return "Player Two wins."
-        elif self.count == 9:
-            return "Draw"
-        else:
-            return "contd."
         pass
 
     def player_one(self):
         try:
             choice = simpledialog.askinteger("Player One Turn", "Enter a number between 1 and 9")
+            while choice < 1 or choice > 9:
+                self.player_one()
             self.validate_cell(choice)
             return choice
         except AttributeError:
@@ -128,7 +126,8 @@ class TicTacToe:
     def player_two(self):
         try:
             choice = simpledialog.askinteger("Player Two Turn", "Enter a number between 1 and 9")
-            self.validate_number(choice)
+            while choice < 1 or choice > 9:
+                choice = simpledialog.askinteger("Player Two Turn", "Enter a VALID NUMBER  BETWEEN 1 AND 9")
             self.validate_cell(choice)
             return choice
         except AttributeError:
@@ -156,21 +155,8 @@ class TicTacToe:
         return string
 
     def start_game(self):
-        messagebox.showinfo("Game Board", f"{self.display_board()}")
-        while self.result() != "contd":
-            number = self.player_one()
-            while number < 1 or number > 9:
-                number = self.player_one()
-            self.play(number)
-            messagebox.showinfo("Game Board", f"{self.display_board()}")
-            if self.result() == "contd":
-                number = self.player_two()
-                while number < 1 or number > 9:
-                    number = self.player_two()
-                self.play(number)
-                messagebox.showinfo("Game Board", f"{self.display_board()}")
-            else:
-                return messagebox.showinfo("Winner Declaration.", f"{self.result()}")
+        while self.result() != None:
+            self.player_one()
 
 
 if __name__ == "__main__":
