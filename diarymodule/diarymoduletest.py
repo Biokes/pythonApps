@@ -177,8 +177,9 @@ class TestDiary:
         diaries: Diaries = Diaries()
         diary: Diary = Diary("name1", "password")
         diaries.add(diary)
+        diary1: Diary = Diary("name1", "password")
         with pytest.raises(NameAlreadyExistError):
-            diaries.add(diary)
+            diaries.add(diary1)
 
     def test_findDiaryByUsername_diaryIsGotten(self):
         diaries: Diaries = Diaries()

@@ -60,9 +60,10 @@ class DiaryMain:
             self.diary_menu()
         except InvalidCommandError:
             messagebox.showinfo("Warning", "Invalid username or Password entered.\nEnter a valid name and password.")
-            self.diary_menu()
+            self.landing_page()
         except NameAlreadyExistError:
             messagebox.showerror("Error", "Username already Exist")
+            self.landing_page()
 
     def findDiaryByUsername(self):
         try:
@@ -79,8 +80,9 @@ class DiaryMain:
             1. Create Entry
             2. Update Entry
             3. Delete Entry
-            4. Main menu
-            5. Exit
+            4. Find Entry
+            5. Main menu
+            6. Exit
             """)
             match response:
                 case "1":
@@ -90,8 +92,10 @@ class DiaryMain:
                 case "3":
                     self.delete_Entry()
                 case "4":
-                    self.landing_page()
+                    self.find_entry()
                 case "5":
+                    self.landing_page()
+                case "6":
                     messagebox.showinfo("Exit", "Exiting...........")
                     sys.exit(0)
                 case _:
@@ -156,7 +160,7 @@ class DiaryMain:
             self.diary_menu()
         except InvalidCommandError:
             messagebox.showinfo("Warning", "Invalid UserName orPassword.")
-            self.delete_Entry()
+            self.diary_menu()
         except ValueError:
             messagebox.showinfo("Warning", "Invalid character for id.")
             self.diary_menu()
@@ -167,7 +171,28 @@ class DiaryMain:
             messagebox.showinfo("Warning", "Diary is Locked\nEnter The correct password to unlock.")
             self.diary_menu()
         except EntryNotFoundError:
-            messagebox.showinfo("Warning", "Invalid password.")
+            messagebox.showinfo("Warning", "No Entry match found.")
+            self.diary_menu()
+
+    def find_entry(self):
+        try:
+            password = simpledialog.askstring("Password", "Enter your diary password")
+            self.diary.unlock_diary(password)
+            entry_id = simpledialog.askinteger("Find Entry", "Enter your Entry ID")
+            messagebox.showinfo("Find Entry", f"{self.diary.find_entry_by_id(entry_id).__str__()}")
+            self.diary.lock_diary()
+            self.diary_menu()
+        except IncorrectPasswordError:
+            messagebox.showinfo("Warning", "Incorrect password.")
+            self.diary_menu()
+        except UnlockDiary:
+            messagebox.showinfo("Warning", "Diary is Locked\nEnter The correct password to unlock.")
+            self.diary_menu()
+        except EntryNotFoundError:
+            messagebox.showinfo("Warning", "No Entry match found.")
+            self.diary_menu()
+        except InvalidCommandError:
+            messagebox.showinfo("Warning", "Invalid UserName orPassword.")
             self.diary_menu()
 
 

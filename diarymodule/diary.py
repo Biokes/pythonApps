@@ -70,4 +70,3 @@ class Diary:
             return "Entry deleted successfully"
         self.lock_diary()
         raise UnlockDiary
-
