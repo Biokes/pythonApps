@@ -31,8 +31,15 @@ class TestTictactoe:
         with pytest.raises(CellTakenError):
             tictactoe.play(1)
 
-    def test_endGame_Player_wins_or_Draw(self):
+    def test_endGame_PlayerOne_wins_or_Draw(self):
         tictactoe: TicTacToe = TicTacToe()
         for numbers in range(1, 10):
             tictactoe.play(numbers)
-        assert tictactoe.result() == "Player One Wins"
+        assert tictactoe.result() == "Player one wins."
+
+    def test_putInvalidNumber_invalidNumberRaisesError(self):
+        tictactoe: TicTacToe = TicTacToe()
+        with pytest.raises(ValueError):
+            tictactoe.play(12)
+        with pytest.raises(Exception):
+            tictactoe.play(":")

@@ -26,6 +26,7 @@ class TicTacToe:
             raise ValueError
 
     def play(self, cell_number: int):
+        self.validate_number(cell_number)
         self.validate_cell(cell_number)
         row = (cell_number - 1) // 3
         column = (cell_number - 1) % 3
