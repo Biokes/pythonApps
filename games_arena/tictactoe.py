@@ -25,15 +25,6 @@ class TicTacToe:
         if not self.get_board_cell(number) == Cell_Values.EMPTY:
             raise CellTakenError
 
-    def request_for_input(cls):
-        number = simpledialog.askinteger("Invalid number", "Enter a number between 1 and 9")
-        return number
-
-    def validate_number(self, number: int):
-        if number not in (1, 2, 3, 4, 5, 6, 7, 8, 9):
-            number = simpledialog.askinteger("Invalid number", "Enter a number between 1 and 9")
-        return number
-
     def play(self, cell_number: int):
         self.validate_number(cell_number)
         self.validate_cell(cell_number)
@@ -103,7 +94,6 @@ class TicTacToe:
     def player_one(self):
         try:
             choice = simpledialog.askinteger("Player One Turn", "Enter a number between 1 and 9")
-            self.validate_number(choice)
             self.validate_cell(choice)
             return choice
         except AttributeError:
@@ -169,7 +159,10 @@ class TicTacToe:
     def start_game(self):
         messagebox.showinfo("Game Board", f"{self.display_board()}")
         while self.result() != "contd":
-            self.play(self.player_one())
+            number = self.player_one()
+            while number < 1 or number > 9:
+                number = self.player_one()
+            self.play(number)
             messagebox.showinfo("Game Board", f"{self.display_board()}")
             if self.result() != "contd":
                 self.play(self.player_two())
