@@ -156,7 +156,7 @@ class TicTacToe:
 
     def start_game(self):
         while self.result() is not None or self.count != 9:
-            messagebox.showinfo("Board", f"{self.display_board()}")
+            messagebox.showinfo("Board", f" {self.display_board()}")
             if self.result() is not None:
                 break
             self.play(self.player_one())
