@@ -39,15 +39,17 @@ class DiaryMain:
 
     def createDiary(self):
         try:
-            name = simpledialog.askstring("😘😘😘", "Pls Enter a valid username for your diary")
-            password = simpledialog.askstring("Password", "Enter a valid password for your diary")
+            name = simpledialog.askstring("Create Diary", "Pls Enter a valid username for your diary")
+            password = simpledialog.askstring("Enter Password",
+                                              "Enter a valid password for your diary\n Note if Forgotten Diary Cannot be Retrieved")
             self.diary = Diary(name, password)
+            self.diary.lock_diary()
             self.diaries.add(self.diary)
-            messagebox.showinfo("Successful", "Diary created successfully.")
+            messagebox.showinfo("Successful", "Diary created successfully.\n Diary is Now Locked.")
             self.diary_menu()
         except InvalidCommandError:
-            messagebox.showinfo("Warning", "Invalid username or pass word entered.\nEnter a valid name and password.")
-            self.createDiary()
+            messagebox.showinfo("Warning", "Invalid username or Password entered.\nEnter a valid name and password.")
+            self.diary_menu()
 
     def findDiaryByUsername(self):
         try:
@@ -55,7 +57,7 @@ class DiaryMain:
             self.diary = self.diaries.find_by_username(username)
             self.diary_menu()
         except UsernameNotFound:
-            messagebox.showinfo("Warning", "Invalid username or pass word entered.\nEnter a valid name and password.")
+            messagebox.showinfo("Warning", "Invalid username\nUserName Does not match any Existing Diary UserName.")
             self.landing_page()
 
     def diary_menu(self):
@@ -84,18 +86,26 @@ class DiaryMain:
                     self.diary_menu()
         except (IncorrectPasswordError, UnlockDiary, InvalidCommandError,
                 UsernameNotFound, InvalidId, NameAlreadyExistError):
-            messagebox.showinfo("Invalid Choice", "You wan Enter Wrong input abi?\nIdiot😡😡😡😡😡😡")
+            messagebox.showinfo("Invalid Choice", "Wrong set of Information's provided\nPlease check and retry.")
             self.diary_menu()
 
     def createEntry(self):
-        entry_title = simpledialog.askstring("Entry Title", "Pls Enter Your Entry Title ")
-        entry_body = simpledialog.askstring("Entry Body", "Enter Entry body")
-        if len(entry_title) == 0 or len(entry_body) == 0:
-            messagebox.showinfo("Warning", "Entry Title or Body cannot be Empty.")
-            self.createEntry()
-        entry = self.diary.create_entry(entry_title, entry_body)
-        messagebox.showinfo("Successful", entry.__str__())
-        self.diary_menu()
+        try:
+            diary_password = simpledialog.askstring("Entry Title", "Pls Enter Your Password")
+            self.diary.unlock_diary(diary_password)
+            entry_title = simpledialog.askstring("Entry Title", "Pls Enter Your Entry Title ")
+            entry_body = simpledialog.askstring("Entry Body", "Enter Entry body")
+            if len(entry_title) == 0 or len(entry_body) == 0:
+                messagebox.showinfo("Warning", "Entry Title or Body cannot be Empty.")
+                self.createEntry()
+            entry = self.diary.create_entry(entry_title, entry_body)
+            messagebox.showinfo("Successful", entry.__str__())
+            self.diary.lock_diary()
+            self.diary_menu()
+        except (IncorrectPasswordError, UnlockDiary, InvalidCommandError,
+                UsernameNotFound, InvalidId, NameAlreadyExistError) as error:
+            messagebox.showinfo("Warning", f"{error}\nPlease check and retry.")
+            self.diary_menu()
 
     def update_Entry(self):
         try:
@@ -104,6 +114,7 @@ class DiaryMain:
             title = simpledialog.askstring("update Entry", "Enter Entry name to updated: ")
             body = simpledialog.askstring("Update Entry Body", "Enter your message")
             self.diary.updateEntry(body, title)
+            self.diary.lock_diary()
             self.diary_menu()
         except InvalidCommandError:
             messagebox.showinfo("Warning", "Invalid password.")
@@ -130,7 +141,7 @@ class DiaryMain:
             messagebox.showinfo("Delete Entry", response)
             self.diary_menu()
         except InvalidCommandError:
-            messagebox.showinfo("Warning", "Invalid password.")
+            messagebox.showinfo("Warning", "Invalid UserName orPassword.")
             self.delete_Entry()
         except ValueError:
             messagebox.showinfo("Warning", "Invalid character for id.")

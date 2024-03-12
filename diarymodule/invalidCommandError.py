@@ -1,6 +1,6 @@
 class InvalidCommandError(BaseException):
     def __init__(self):
-        super().__init__("Invalid name or password.")
+        super().__init__("Invalid Username or Password.\n Pls check and retry.")
 
 
 class UnlockDiary(BaseException):
