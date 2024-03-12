@@ -35,6 +35,7 @@ class DiaryMain:
             case "4":
                 sys.exit(0)
             case _:
+                messagebox.showwarning("Serious Warning", "You Entered a wrong option")
                 self.landing_page()
 
     def deleteDiary(self):
