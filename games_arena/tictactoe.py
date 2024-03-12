@@ -22,8 +22,8 @@ class TicTacToe:
             raise CellTakenError
 
     def validate_number(self, number: int):
-        if number < 1 or number > 9:
-            raise ValueError
+        while number not in (1, 2, 3, 4, 5, 6, 7, 8, 9):
+            choice = simpledialog.askinteger("Player One Turn", "Enter a number between 1 and 9")
         return number
 
     def play(self, cell_number: int):
