@@ -1,5 +1,5 @@
 import tkinter as display
-from tkinter import simpledialog
+from tkinter import simpledialog, messagebox
 
 from apps.games_arena.celltakenerror import CellTakenError
 from apps.games_arena.cellvalue import Cell_Values
