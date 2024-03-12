@@ -35,4 +35,4 @@ class TestTictactoe:
         tictactoe: TicTacToe = TicTacToe()
         for numbers in range(1, 10):
             tictactoe.play(numbers)
-        assert tictactoe.result() == "Draw"
+        assert tictactoe.result() == "Player One Wins"
