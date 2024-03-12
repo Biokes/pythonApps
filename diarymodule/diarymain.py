@@ -61,6 +61,8 @@ class DiaryMain:
         except InvalidCommandError:
             messagebox.showinfo("Warning", "Invalid username or Password entered.\nEnter a valid name and password.")
             self.diary_menu()
+        except NameAlreadyExistError:
+            messagebox.showerror("Error", "Username already Exist")
 
     def findDiaryByUsername(self):
         try:
