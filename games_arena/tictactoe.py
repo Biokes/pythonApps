@@ -90,7 +90,49 @@ class TicTacToe:
 
     def player_one(self):
         try:
-            choice = simpledialog.askinteger("Game", "Enter a number between 1 and 9")
+            choice = simpledialog.askinteger("Player One Turn", "Enter a number between 1 and 9")
+            self.validate_number(choice)
+            self.validate_cell(choice)
+            return choice
+        except AttributeError:
+            messagebox.showerror("Invalid input", "You Entered the wrong input")
+            self.player_one()
+        except CellTakenError:
+            messagebox.showerror("Invalid input", "You Entered the wrong input")
+            self.player_one()
+        except ValueError:
+            messagebox.showerror("Invalid input", "You Entered the wrong input")
+            self.player_one()
+        except Exception:
+            messagebox.showerror("Invalid input", "You Entered the wrong input")
+            self.player_one()
+
+    def __get_board_values(self):
+        list1 = []
+        for numbers in range(9):
+            list1.append(self.get_board_cell(numbers + 1))
+        return list1
+
+    def __str__(self):
+        list1 = self.__get_board_values()
+        count = 0
+        return_value = f"{"-"}{"-"}{"-"}{"-"}{"-"}{"-"}{"-"}{"-"}{"-"}\n"
+        for values in list1:
+            if values == Cellvalues.EMPTY:
+                return_value += f" {" "} |"
+                count += 1
+            else:
+                return_value += f" {values} |"
+                count += 1
+            if count % 3 == 0:
+                return_value += "\n" + f"{"-"}{"-"}{"-"}{"-"}{"-"}{"-"}{"-"}{"-"}{"-"}\n"
+
+    def display_board(self):
+        return self.__str__()
+
+    def player_two(self):
+        try:
+            choice = simpledialog.askinteger("Player Two Turn", "Enter a number between 1 and 9")
             self.validate_number(choice)
             self.validate_cell(choice)
             return choice
@@ -108,4 +150,10 @@ class TicTacToe:
             self.player_one()
 
     def start_game(self):
-        pass
+        for number in range(5):
+            self.play(self.player_one())
+            self.display_board()
+            if self.result() == "Draw" and self.count != 9:
+                self.play(self.player_two())
+            else:
+                return self.result()
