@@ -1,7 +1,11 @@
 from apps.games_arena.celltakenerror import CellTakenError
 from apps.games_arena.cellvalue import Cellvalues
+import tkinter as display
+from tkinter import simpledialog, messagebox
 
 class TicTacToe:
+    root = display.Tk()
+    root.withdraw()
     def __init__(self):
         self.game_board = [[Cellvalues.EMPTY, Cellvalues.EMPTY, Cellvalues.EMPTY],
                            [Cellvalues.EMPTY, Cellvalues.EMPTY, Cellvalues.EMPTY],
@@ -16,6 +20,10 @@ class TicTacToe:
     def validate_cell(self, number):
         if not self.get_board_cell(number) == Cellvalues.EMPTY:
             raise CellTakenError
+
+    def validate_number(self, number: int):
+        if number < 1 or number > 10:
+            raise ValueError
 
     def play(self, cell_number: int):
         self.validate_cell(cell_number)
@@ -81,7 +89,23 @@ class TicTacToe:
         pass
 
     def player_one(self):
-        pass
+        try:
+            choice = simpledialog.askinteger("Game", "Enter a number between 1 and 9")
+            self.validate_number(choice)
+            self.validate_cell(choice)
+            return choice
+        except AttributeError:
+            messagebox.showerror("Invalid input", "You Entered the wrong input")
+            self.player_one()
+        except CellTakenError:
+            messagebox.showerror("Invalid input", "You Entered the wrong input")
+            self.player_one()
+        except ValueError:
+            messagebox.showerror("Invalid input", "You Entered the wrong input")
+            self.player_one()
+        except Exception:
+            messagebox.showerror("Invalid input", "You Entered the wrong input")
+            self.player_one()
 
     def start_game(self):
         pass
