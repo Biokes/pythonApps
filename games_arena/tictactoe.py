@@ -18,13 +18,13 @@ class TicTacToe:
         self.count = 0
 
     def get_board_cell(self, cell_number: int):
-        cell_number -= 1
-        row = cell_number // 3
-        column = cell_number % 3
+        number = cell_number - 1
+        row = number // 3
+        column = number % 3
         return self.game_board[row][column]
 
     def validate_cell(self, number):
-        if self.get_board_cell(number) != Cell_Values.EMPTY:
+        if self.get_board_cell(number) is not Cell_Values.EMPTY:
             raise CellTakenError
 
     def play(self, cell_number: int):
@@ -109,6 +109,9 @@ class TicTacToe:
         except ValueError as error:
             print("Invalid input", f"\n{error}")
             self.player_one()
+        except BaseException as error:
+            print("Invalid input", f"\n{error}\n\n")
+            self.player_two()
 
     def __str__(self):
         output = f"  {"-"} {"-"} {"-"} {"-"} {"-"} {"-"} {"-"} {"-"}\n"
@@ -145,6 +148,9 @@ class TicTacToe:
             print("Invalid input", f"\n{error}\n\n")
             self.player_two()
         except ValueError as error:
+            print("Invalid input", f"\n{error}\n\n")
+            self.player_two()
+        except BaseException as error:
             print("Invalid input", f"\n{error}\n\n")
             self.player_two()
 
