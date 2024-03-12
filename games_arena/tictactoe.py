@@ -140,16 +140,16 @@ class TicTacToe:
             return choice
         except AttributeError:
             messagebox.showerror("Invalid input", "You Entered the wrong input")
-            self.player_one()
+            self.player_two()
         except CellTakenError:
             messagebox.showerror("Invalid input", "You Entered the wrong input")
-            self.player_one()
+            self.player_two()
         except ValueError:
             messagebox.showerror("Invalid input", "You Entered the wrong input")
-            self.player_one()
+            self.player_two()
         except Exception:
             messagebox.showerror("Invalid input", "You Entered the wrong input")
-            self.player_one()
+            self.player_two()
 
     def display_numbers(self):
         string = ""
