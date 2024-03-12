@@ -105,9 +105,6 @@ class TicTacToe:
         except ValueError:
             messagebox.showerror("Invalid input", "You Entered the wrong input")
             self.player_one()
-        except Exception:
-            messagebox.showerror("Invalid input", "You Entered the wrong input")
-            self.player_one()
 
     def __str__(self):
         output = f"{"-"} {"-"} {"-"} {"-"} {"-"} {"-"} {"-"} {"-"}\n"
@@ -142,9 +139,6 @@ class TicTacToe:
         except TypeError:
             messagebox.showerror("Invalid input", "You Entered the wrong input")
             self.player_two()
-        except Exception:
-            messagebox.showerror("Invalid input", "You Entered the wrong input")
-            self.player_two()
 
     def display_numbers(self):
         string = ""
@@ -157,11 +151,13 @@ class TicTacToe:
     def start_game(self):
         while self.result() is not None or self.count != 9:
             messagebox.showinfo("Board", f" {self.display_board()}")
-            if self.result() is not None:
-                break
             self.play(self.player_one())
             messagebox.showinfo("Board", f"{self.display_board()}")
+            if self.result() is not None:
+                break
             self.play(self.player_two())
+            if self.result() is not None:
+                break
         winner = self.result()
         messagebox.showinfo("Winner", f"{winner}")
 
