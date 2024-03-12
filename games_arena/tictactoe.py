@@ -161,14 +161,19 @@ class TicTacToe:
             self.__game2ErrorCheck()
 
     def start_game(self):
-        while self.result() is None or self.count != 9:
-            print("Board\n\n", f" {self.display_board()}\n\n")
-            self.__game1ErrorCheck()
-            print("Board: \n\n", f"{self.display_board()}\n\n")
-            if self.result() is not None:
-                break
-            self.__game2ErrorCheck()
-        print("Winner::\n", self.result())
+        try:
+            while self.result() is None or self.count != 9:
+                print("Board\n\n", f" {self.display_board()}\n\n")
+                self.__game1ErrorCheck()
+                print("Board: \n\n", f"{self.display_board()}\n\n")
+                if self.result() is not None:
+                    break
+                self.__game2ErrorCheck()
+            print("Winner::\n", self.result())
+        except KeyboardInterrupt as error:
+            print(error)
+            self.start_game()
+
 
 
 if __name__ == "__main__":

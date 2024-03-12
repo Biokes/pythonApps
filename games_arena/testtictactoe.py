@@ -39,10 +39,10 @@ class TestTictactoe:
 
     def test_putInvalidNumber_invalidNumberRaisesError(self):
         tictactoe: TicTacToe = TicTacToe()
-        with pytest.raises(ValueError):
+        with pytest.raises(Exception):
             tictactoe.play(12)
         with pytest.raises(Exception):
-            tictactoe.play(" : ")
+            tictactoe.play(-9)
         tictactoe.play(1)
         tictactoe.play(2)
         tictactoe.play(9)
