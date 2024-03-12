@@ -42,7 +42,7 @@ class TestTictactoe:
         with pytest.raises(ValueError):
             tictactoe.play(12)
         with pytest.raises(Exception):
-            tictactoe.play(":")
+            tictactoe.play(" : ")
         tictactoe.play(1)
         tictactoe.play(2)
         tictactoe.play(9)

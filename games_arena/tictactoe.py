@@ -23,6 +23,7 @@ class TicTacToe:
         column = number % 3
         return self.game_board[row][column]
 
+
     def validate_cell(self, number):
         if self.get_board_cell(number) is not Cell_Values.EMPTY:
             raise CellTakenError
@@ -43,7 +44,7 @@ class TicTacToe:
             2] == Cell_Values.X:
             return "Player one wins."
         elif self.game_board[1][0] == Cell_Values.X and self.game_board[1][1] == Cell_Values.X and self.game_board[1][
-            1] == Cell_Values.X:
+            2] == Cell_Values.X:
             return "Player one wins."
         elif self.game_board[2][0] == Cell_Values.X and self.game_board[2][1] == Cell_Values.X and self.game_board[2][
             2] == Cell_Values.X:
@@ -67,7 +68,7 @@ class TicTacToe:
             2] == Cell_Values.O:
             return "Player Two wins."
         elif self.game_board[1][0] == Cell_Values.O and self.game_board[1][1] == Cell_Values.O and self.game_board[1][
-            1] == Cell_Values.O:
+            2] == Cell_Values.O:
             return "Player Two wins."
         elif self.game_board[2][0] == Cell_Values.O and self.game_board[2][1] == Cell_Values.O and self.game_board[2][
             2] == Cell_Values.O:
@@ -94,24 +95,13 @@ class TicTacToe:
             choice = int(input("Player One Turn: \nEnter a number between 1 and 9: "))
             while choice < 1 or choice > 9:
                 choice = int(input("\nEnter a VALID NUMBER  BETWEEN 1 AND 9 :: "))
-                if choice >= 1 or choice <= 9:
-                    break
             return choice
-        except AttributeError as error:
-            print("Invalid input", f"\n{error}")
-            self.player_one()
-        except CellTakenError as error:
-            print("Invalid input", f"\n{error}")
-            self.player_one()
         except TypeError as error:
             print("Invalid input", f"\n{error}")
-            self.player_two()
+            self.player_one()
         except ValueError as error:
             print("Invalid input", f"\n{error}")
             self.player_one()
-        except BaseException as error:
-            print("Invalid input", f"\n{error}\n\n")
-            self.player_two()
 
     def __str__(self):
         output = f"  {"-"} {"-"} {"-"} {"-"} {"-"} {"-"} {"-"} {"-"}\n"
@@ -134,25 +124,14 @@ class TicTacToe:
             choice = int(input("Player Two Turn:\nEnter a number between 1 and 9:  "))
             while choice < 1 or choice > 9:
                 choice = int(input("\nEnter a VALID NUMBER  BETWEEN 1 AND 9 :: "))
-                if choice >= 1 or choice <= 9:
-                    break
-            self.validate_cell(choice)
             return choice
-        except AttributeError as error:
-            print("Invalid input", f"\n{error}\n\n")
-            self.player_two()
-        except CellTakenError as error:
-            print("Invalid input", f"\n{error}\n\n")
-            self.player_two()
         except TypeError as error:
             print("Invalid input", f"\n{error}\n\n")
             self.player_two()
         except ValueError as error:
             print("Invalid input", f"\n{error}\n\n")
             self.player_two()
-        except BaseException as error:
-            print("Invalid input", f"\n{error}\n\n")
-            self.player_two()
+
 
     def display_numbers(self):
         string = ""
@@ -163,17 +142,14 @@ class TicTacToe:
         return string
 
     def start_game(self):
-        while self.result() is not None or self.count != 9:
+        while self.result() is None or self.count != 9:
             print("Board\n\n", f" {self.display_board()}\n\n")
             self.play(self.player_one())
             print("Board: \n\n", f"{self.display_board()}\n\n")
             if self.result() is not None:
                 break
             self.play(self.player_two())
-            if self.result() is not None:
-                break
-        winner = self.result()
-        print("Winner::\n", f"{winner}")
+        print("Winner::\n", self.result())
 
 
 if __name__ == "__main__":
