@@ -162,7 +162,7 @@ class TicTacToe:
 
     def start_game(self):
         try:
-            while self.result() is None or self.count != 9:
+            while self.result() is None and self.count != 9:
                 print("Board\n\n", f" {self.display_board()}\n\n")
                 self.__game1ErrorCheck()
                 print("Board: \n\n", f"{self.display_board()}\n\n")
@@ -171,7 +171,7 @@ class TicTacToe:
                 self.__game2ErrorCheck()
             print("Winner::\n", self.result())
         except KeyboardInterrupt as error:
-            print(error, "causing the game to end abruptly\nThe game resta")
+            print(error)
             self.start_game()
 
 
