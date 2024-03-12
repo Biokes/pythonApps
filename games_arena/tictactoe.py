@@ -31,9 +31,9 @@ class TicTacToe:
         row = (cell_number - 1) // 3
         column = (cell_number - 1) % 3
         if self.count % 2 == 0:
-            self.game_board[row][column] = Cellvalues.X
+            self.game_board[row][column] = "X"
         else:
-            self.game_board[row][column] = Cellvalues.O
+            self.game_board[row][column] = "O"
         self.count += 1
 
     def result(self):
@@ -127,6 +127,7 @@ class TicTacToe:
                 count += 1
             if count % 3 == 0:
                 return_value += "\n" + f"{"-"}{"-"}{"-"}{"-"}{"-"}{"-"}{"-"}{"-"}{"-"}\n"
+        return return_value
 
     def display_board(self):
         return self.__str__()
@@ -159,10 +160,17 @@ class TicTacToe:
         return string
 
     def start_game(self):
+        messagebox.showinfo("Game Board", f"{self.display_board()}")
         for number in range(5):
             self.play(self.player_one())
-            self.display_board()
+            messagebox.showinfo("Game Board", f"{self.display_board()}")
             if self.result() == "Draw" and self.count != 9:
                 self.play(self.player_two())
+                messagebox.showinfo("Game Board", f"{self.display_board()}")
             else:
                 return self.result()
+
+
+if __name__ == "__main__":
+    game = TicTacToe()
+    game.start_game()

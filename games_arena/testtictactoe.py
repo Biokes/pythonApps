@@ -50,3 +50,4 @@ class TestTictactoe:
         tictactoe.play(6)
         tictactoe.play(8)
         assert tictactoe.result() == "Player Two wins."
+
