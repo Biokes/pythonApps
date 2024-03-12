@@ -31,7 +31,7 @@ class TicTacToe:
         self.validate_cell(cell_number)
         cell_number -= 1
         row = int(cell_number / 3)
-        column = int(cell_number)
+        column = int(cell_number % 3)
         if self.count % 2 == 0:
             self.game_board[row][column] = Cell_Values.X
         else:
