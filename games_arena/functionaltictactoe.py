@@ -84,14 +84,14 @@ def play_game():
     display_number()
     print('Let the game begin☺️☺️☺️!!!')
     for num in range(0, 9):
-        if num == 6 or num == 8 or num == 7:
+        if num == 8 or num == 7:
             break
         collect_input_for_player_1()
         winner = check_for_winner()
         if winner == 0:
             display_board()
             return '🎉🎉🎉🤭🤭🥳🎇player1 won🤭🤭🥳🎇🎉🎉🎉'
-        if num == 6 or num == 8 or num == 7:
+        if num == 8 or num == 7:
             break
         collect_input_for_player_2()
         winner = check_for_winner()
