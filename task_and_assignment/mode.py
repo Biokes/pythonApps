@@ -15,3 +15,7 @@ class Mode:
                 new_count = count
             count = 0
         return [new_count, mode]
+
+
+if __name__ == "__main__":
+    print(r"\d+[A-Z][a-z]* [A-Z][a-z]*")
